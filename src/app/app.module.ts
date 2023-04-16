@@ -9,6 +9,7 @@ import {initializeKeycloak} from "./init/keycloak-init.factory";
 import { StoreModule } from '@ngrx/store';
 import { GraphQLModule } from './graphql.module';
 import { HttpClientModule } from '@angular/common/http';
+import {MainModule} from "./modules/main/main.module";
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { HttpClientModule } from '@angular/common/http';
     StoreModule.forRoot({}, {}),
     GraphQLModule,
     HttpClientModule,
+    MainModule,
   ],
   providers: [
     /*{

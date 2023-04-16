@@ -1,1 +1,29 @@
-<p>main-page works!</p>
+<mat-toolbar class="toolbar">
+  <button mat-icon-button aria-label="Кнопка открытия меню" (click)="sidenav.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>Holder</span>
+  <span class="main-spacer"></span>
+  <button mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon aria-hidden="false" aria-label="Кнопка открытия профиля">person</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item>Item 1</button>
+    <button mat-menu-item>Item 2</button>
+  </mat-menu>
+</mat-toolbar>
+<mat-sidenav-container>
+  <mat-sidenav #sidenav class="page sidenav" mode="side">
+    <ng-container>
+      <button mat-button class="sidenav-button">Holder</button>
+      <mat-divider></mat-divider>
+    </ng-container>
+    <ng-container>
+      <button mat-button class="sidenav-button">Bonus system</button>
+      <mat-divider></mat-divider>
+    </ng-container>
+  </mat-sidenav>
+  <mat-sidenav-content class="page">
+    <p>Content</p>
+  </mat-sidenav-content>
+</mat-sidenav-container>
