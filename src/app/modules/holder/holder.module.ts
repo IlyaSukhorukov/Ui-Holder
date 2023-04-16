@@ -6,8 +6,6 @@ import {HolderStoreEffects} from "./store/holder-store.effects";
 import {EffectsModule} from "@ngrx/effects";
 import {cardsReducer, metaReducers, stateFeatureKey} from "./store";
 
-
-
 @NgModule({
   declarations: [
     CardsListComponent

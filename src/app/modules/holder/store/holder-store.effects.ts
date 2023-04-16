@@ -20,7 +20,6 @@ const QUERY_LOAD_USER_CARDS = gql`
   }
 `
 
-
 @Injectable()
 export class HolderStoreEffects {
   constructor(private actions$: Actions, private _apollo: Apollo) {}
@@ -35,8 +34,7 @@ export class HolderStoreEffects {
         }
         return this._apollo.query<{list: Card[]}>(qo).pipe(
           // @ts-ignore
-          map(({data}) => UserCardsLoaded({list: JSON.parse(JSON.stringify(data['cards']))})),
-          tap((data) => console.log(data))
+          map(({data}) => UserCardsLoaded({list: JSON.parse(JSON.stringify(data['cards']))}))
         );
       })
     ));
