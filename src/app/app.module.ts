@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {KeycloakAngularModule, KeycloakService} from "keycloak-angular";
 import {initializeKeycloak} from "./init/keycloak-init.factory";
+import { StoreModule } from '@ngrx/store';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import {initializeKeycloak} from "./init/keycloak-init.factory";
     AppRoutingModule,
     BrowserAnimationsModule,
     KeycloakAngularModule,
+    StoreModule.forRoot({}, {}),
   ],
   providers: [
     {
