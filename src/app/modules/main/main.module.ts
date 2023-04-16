@@ -7,6 +7,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatMenuModule} from "@angular/material/menu";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatDividerModule} from "@angular/material/divider";
+import {HolderModule} from "../holder/holder.module";
 
 
 
@@ -21,7 +22,8 @@ import {MatDividerModule} from "@angular/material/divider";
     MatIconModule,
     MatMenuModule,
     MatSidenavModule,
-    MatDividerModule
+    MatDividerModule,
+    HolderModule
   ]
 })
 export class MainModule { }

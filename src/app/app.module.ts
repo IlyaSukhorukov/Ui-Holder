@@ -10,6 +10,7 @@ import { StoreModule } from '@ngrx/store';
 import { GraphQLModule } from './graphql.module';
 import { HttpClientModule } from '@angular/common/http';
 import {MainModule} from "./modules/main/main.module";
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import {MainModule} from "./modules/main/main.module";
     GraphQLModule,
     HttpClientModule,
     MainModule,
+    EffectsModule.forRoot([]),
   ],
   providers: [
     /*{
