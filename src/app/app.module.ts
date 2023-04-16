@@ -7,6 +7,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {KeycloakAngularModule, KeycloakService} from "keycloak-angular";
 import {initializeKeycloak} from "./init/keycloak-init.factory";
 import { StoreModule } from '@ngrx/store';
+import { GraphQLModule } from './graphql.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -18,6 +20,8 @@ import { StoreModule } from '@ngrx/store';
     BrowserAnimationsModule,
     KeycloakAngularModule,
     StoreModule.forRoot({}, {}),
+    GraphQLModule,
+    HttpClientModule,
   ],
   providers: [
     {
