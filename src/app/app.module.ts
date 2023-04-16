@@ -24,12 +24,12 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule,
   ],
   providers: [
-    {
+    /*{
       provide: APP_INITIALIZER,
       useFactory: initializeKeycloak,
       multi: true,
       deps: [KeycloakService]
-    }
+    }*/
   ],
   bootstrap: [AppComponent]
 })
