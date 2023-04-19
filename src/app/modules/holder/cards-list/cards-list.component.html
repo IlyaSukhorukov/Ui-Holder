@@ -1,1 +1,45 @@
-<p>cards-list works!</p>
+<div class="main" fxLayout="column" fxLayoutAlign="start center" >
+<mat-card class="top">
+  <mat-card-content fxLayout="row" fxLayoutAlign="start center"  >
+    <span class="top-item">Grid</span>
+    <mat-slide-toggle class="top-item" (change)="onToggleChange($event)"></mat-slide-toggle>
+    <span class="top-item">List</span>
+    <span class="main-spacer"></span>
+    <button mat-icon-button >
+      <mat-icon aria-hidden="false" aria-label="Добавить запись">add</mat-icon>
+    </button>
+  </mat-card-content>
+</mat-card>
+  <!-- List -->
+  <div class="cards" *ngIf="isListView">
+    <div class="favorites-cards">
+      <mat-card *ngFor="let card of favoriteCards">
+        <mat-card-header>
+          <mat-card-title>{{card.name}}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>{{card.code}}</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="other-cards">
+      <mat-card *ngFor="let card of unfavoriteCards">
+        <mat-card-content>
+          <span class="list-fav-name">{{card.name}}</span>
+          <span>{{card.code}}</span>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  <!-- Grid -->
+  <div class="cards" *ngIf="!isListView">
+    <mat-card class="grid-card" *ngFor="let card of unfavoriteCards">
+      <mat-card-header>
+        <mat-card-title>{{card.name}}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>{{card.code}}</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

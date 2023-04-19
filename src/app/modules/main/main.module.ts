@@ -8,11 +8,15 @@ import {MatMenuModule} from "@angular/material/menu";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatDividerModule} from "@angular/material/divider";
 import {HolderModule} from "../holder/holder.module";
+import {RouterModule} from "@angular/router";
 
 
 
 @NgModule({
   declarations: [
+    MainPageComponent
+  ],
+  exports: [
     MainPageComponent
   ],
   imports: [
@@ -23,7 +27,8 @@ import {HolderModule} from "../holder/holder.module";
     MatMenuModule,
     MatSidenavModule,
     MatDividerModule,
-    HolderModule
+    HolderModule,
+    RouterModule
   ]
 })
 export class MainModule { }

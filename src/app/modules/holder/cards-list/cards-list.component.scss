@@ -1,0 +1,29 @@
+.main-spacer {
+  flex: 1 1 auto;
+}
+.main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 1em;
+}
+.top {
+  width: 50%;
+  height: 4em;
+}
+.top-item {
+  padding: 0.5em;
+}
+.cards {
+  width: 50%;
+  margin-top: 1em;
+  display: block;
+  background-color: green;
+}
+.grid-card {
+  width: 10em;
+}
+.list-fav-name {
+  font-size: 1.5em;
+  margin-right: 1em;
+}

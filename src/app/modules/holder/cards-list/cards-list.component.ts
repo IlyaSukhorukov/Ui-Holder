@@ -5,6 +5,7 @@ import {Card} from "../store/schema";
 import {selectCardsList} from "../store/holder-store.selectors";
 import {Subject, takeUntil} from "rxjs";
 import {isEmpty, isNil} from "lodash";
+import {MatSlideToggleChange} from "@angular/material/slide-toggle";
 
 @Component({
   selector: 'app-cards-list',
@@ -12,9 +13,11 @@ import {isEmpty, isNil} from "lodash";
   styleUrls: ['./cards-list.component.scss']
 })
 export class CardsListComponent implements OnInit, OnDestroy {
-  private _favoriteCards: Card[] = [];
-  private _unfavoriteCards: Card[] = [];
   private _unsubscribe$ = new Subject<void>();
+
+  public isListView = false;
+  public favoriteCards: Card[] = [];
+  public unfavoriteCards: Card[] = [];
 
   constructor(private store: Store) {
   }
@@ -22,12 +25,16 @@ export class CardsListComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.store.select(selectCardsList).pipe(takeUntil(this._unsubscribe$)).subscribe((data) => {
       if (!isEmpty(data)) {
-        this._favoriteCards = data.filter((card) => card.is_favorite);
-        this._unfavoriteCards = data.filter((card) => !card.is_favorite);
+        this.favoriteCards = data.filter((card) => card.is_favorite);
+        this.unfavoriteCards = data.filter((card) => !card.is_favorite);
       }
       console.log('in list ' ,data);
     })
     this.store.dispatch(loadUserCards());
+  }
+
+  onToggleChange($event: MatSlideToggleChange): void{
+    this.isListView = $event.checked;
   }
 
   ngOnDestroy(): void {
