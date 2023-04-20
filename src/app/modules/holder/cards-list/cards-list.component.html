@@ -5,7 +5,7 @@
     <mat-slide-toggle class="top-item" (change)="onToggleChange($event)"></mat-slide-toggle>
     <span class="top-item">List</span>
     <span class="main-spacer"></span>
-    <button mat-icon-button >
+    <button mat-icon-button [routerLink]="['./new']">
       <mat-icon aria-hidden="false" aria-label="Добавить запись">add</mat-icon>
     </button>
   </mat-card-content>

@@ -13,6 +13,7 @@ import {MatGridListModule} from "@angular/material/grid-list";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import { CardFormComponent } from './card-form/card-form.component';
+import {RouterModule} from "@angular/router";
 
 @NgModule({
   declarations: [
@@ -22,17 +23,18 @@ import { CardFormComponent } from './card-form/card-form.component';
   exports: [
     CardsListComponent
   ],
-  imports: [
-    CommonModule,
-    StoreModule.forFeature(stateFeatureKey, cardsReducer, {metaReducers}),
-    EffectsModule.forFeature([HolderStoreEffects]),
-    MatCardModule,
-    MatButtonToggleModule,
-    MatSlideToggleModule,
-    FlexLayoutModule,
-    MatGridListModule,
-    MatButtonModule,
-    MatIconModule,
-  ]
+    imports: [
+        CommonModule,
+        StoreModule.forFeature(stateFeatureKey, cardsReducer, {metaReducers}),
+        EffectsModule.forFeature([HolderStoreEffects]),
+        MatCardModule,
+        MatButtonToggleModule,
+        MatSlideToggleModule,
+        FlexLayoutModule,
+        MatGridListModule,
+        MatButtonModule,
+        MatIconModule,
+        RouterModule,
+    ]
 })
 export class HolderModule { }

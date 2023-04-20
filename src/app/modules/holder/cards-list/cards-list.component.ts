@@ -19,18 +19,22 @@ export class CardsListComponent implements OnInit, OnDestroy {
   public favoriteCards: Card[] = [];
   public unfavoriteCards: Card[] = [];
 
-  constructor(private store: Store) {
+  constructor(private _store: Store) {
   }
 
   ngOnInit(): void {
-    this.store.select(selectCardsList).pipe(takeUntil(this._unsubscribe$)).subscribe((data) => {
+    this.subscribeOnCardsList();
+    this._store.dispatch(loadUserCards());
+  }
+
+  subscribeOnCardsList(): void {
+    this._store.select(selectCardsList).pipe(takeUntil(this._unsubscribe$)).subscribe((data) => {
       if (!isEmpty(data)) {
         this.favoriteCards = data.filter((card) => card.is_favorite);
         this.unfavoriteCards = data.filter((card) => !card.is_favorite);
       }
       console.log('in list ' ,data);
     })
-    this.store.dispatch(loadUserCards());
   }
 
   onToggleChange($event: MatSlideToggleChange): void{
