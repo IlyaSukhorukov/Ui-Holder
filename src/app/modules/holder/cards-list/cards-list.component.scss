@@ -8,14 +8,16 @@
   padding-top: 1em;
 }
 .top {
-  width: 50%;
+  min-width: 40em;
+  max-width: 69em;
   height: 4em;
 }
 .top-item {
   padding: 0.5em;
 }
 .cards {
-  width: 50%;
+  min-width: 40em;
+  max-width: 69em;
   margin-top: 1em;
   display: block;
   background-color: green;

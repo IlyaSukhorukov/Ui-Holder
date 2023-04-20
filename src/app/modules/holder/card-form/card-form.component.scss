@@ -1,0 +1,14 @@
+.main-spacer {
+  flex: 1 1 auto;
+}
+.main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 1em;
+}
+.card {
+  height: 15em;
+  width: 69em;
+  background-color: red;
+}
