@@ -24,7 +24,7 @@
     </div>
     <div class="other-cards">
       <mat-card *ngFor="let card of unfavoriteCards">
-        <mat-card-content>
+        <mat-card-content (click)="onCardClick(card.id)">
           <span class="list-fav-name">{{card.name}}</span>
           <span>{{card.code}}</span>
         </mat-card-content>

@@ -41,6 +41,10 @@ export class CardsListComponent implements OnInit, OnDestroy {
     this.isListView = $event.checked;
   }
 
+  onCardClick(uuid: string): void {
+    console.log(uuid);
+  }
+
   ngOnDestroy(): void {
     this._unsubscribe$.next();
     this._unsubscribe$.complete();
