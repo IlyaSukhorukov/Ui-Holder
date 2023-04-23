@@ -14,11 +14,14 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import { CardFormComponent } from './card-form/card-form.component';
 import {RouterModule} from "@angular/router";
+import { CardModalComponent } from './card-modal/card-modal.component';
+import {MatDialog, MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 
 @NgModule({
   declarations: [
     CardsListComponent,
-    CardFormComponent
+    CardFormComponent,
+    CardModalComponent
   ],
   exports: [
     CardsListComponent
@@ -35,6 +38,7 @@ import {RouterModule} from "@angular/router";
         MatButtonModule,
         MatIconModule,
         RouterModule,
+        MatDialogModule,
     ]
 })
 export class HolderModule { }

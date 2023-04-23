@@ -6,6 +6,8 @@ import {selectCardsList} from "../store/holder-store.selectors";
 import {Subject, takeUntil} from "rxjs";
 import {isEmpty, isNil} from "lodash";
 import {MatSlideToggleChange} from "@angular/material/slide-toggle";
+import {MatDialog} from "@angular/material/dialog";
+import {CardModalComponent} from "../card-modal/card-modal.component";
 
 @Component({
   selector: 'app-cards-list',
@@ -19,7 +21,7 @@ export class CardsListComponent implements OnInit, OnDestroy {
   public favoriteCards: Card[] = [];
   public unfavoriteCards: Card[] = [];
 
-  constructor(private _store: Store) {
+  constructor(private _store: Store, public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -42,7 +44,12 @@ export class CardsListComponent implements OnInit, OnDestroy {
   }
 
   onCardClick(uuid: string): void {
-    console.log(uuid);
+    // console.log(uuid);
+    const dialogRef = this.dialog.open(CardModalComponent, { data: uuid });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(result);
+    });
   }
 
   ngOnDestroy(): void {
