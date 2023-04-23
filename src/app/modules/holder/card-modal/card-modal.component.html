@@ -1,1 +1,16 @@
-<p>card-modal works!</p>
+<h1 mat-dialog-title>{{data.name}}</h1>
+<div mat-dialog-content>
+  <p>{{data.uuid}}</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-icon-button [routerLink]="['./new']">
+    <mat-icon aria-hidden="false" aria-label="Редактировать">edit</mat-icon>
+  </button>
+  <button mat-icon-button [routerLink]="['./new']">
+    <mat-icon aria-hidden="false" aria-label="Удалить">delete</mat-icon>
+  </button>
+  <span class="main-spacer"></span>
+  <button mat-icon-button (click)="onClose()">
+    <mat-icon aria-hidden="false" aria-label="Закрыть">close</mat-icon>
+  </button>
+</div>

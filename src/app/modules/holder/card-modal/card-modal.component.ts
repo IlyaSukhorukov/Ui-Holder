@@ -10,6 +10,10 @@ export class CardModalComponent {
 
   constructor(
     public dialogRef: MatDialogRef<CardModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { uuid: string },
+    @Inject(MAT_DIALOG_DATA) public data: { uuid: string, name: string },
   ) {}
+
+  onClose(): void {
+    this.dialogRef.close();
+  }
 }
