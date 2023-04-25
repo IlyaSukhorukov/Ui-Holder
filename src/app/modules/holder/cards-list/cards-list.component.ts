@@ -46,11 +46,13 @@ export class CardsListComponent implements OnInit, OnDestroy {
   onCardClick(uuid: string, name: string, code: string, description: string, type: string): void {
     // console.log(uuid);
     const dialogRef = this.dialog.open(CardModalComponent, {
-      /*minWidth: '75%',
-      maxWidth: '75%',
+      /*minWidth: '20%',
+      maxWidth: '90%',
       maxHeight: '90%',
-      minHeight: '90%',
-      height: '90%',*/
+      minHeight: '20%',*/
+      width: '50em',
+      maxWidth: '69em',
+      maxHeight: '50em',
       data: {
         uuid,
         name,

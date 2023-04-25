@@ -18,6 +18,10 @@ export class CardModalComponent {
     return !isEmpty(this?.data?.description);
   }
 
+  isOtherType(): boolean {
+    return this?.data?.type !== 'bc' && this?.data?.type !== 'qr';
+  }
+
   onClose(): void {
     this.dialogRef.close();
   }
