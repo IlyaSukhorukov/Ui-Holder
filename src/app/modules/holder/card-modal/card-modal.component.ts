@@ -11,7 +11,7 @@ export class CardModalComponent {
 
   constructor(
     public dialogRef: MatDialogRef<CardModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { uuid: string, name: string, code: string, description: string },
+    @Inject(MAT_DIALOG_DATA) public data: { uuid: string, name: string, code: string, description: string, type: string },
   ) {}
 
   hasDescription(): boolean {

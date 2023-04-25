@@ -15,13 +15,13 @@ import {MatIconModule} from "@angular/material/icon";
 import { CardFormComponent } from './card-form/card-form.component';
 import {RouterModule} from "@angular/router";
 import { CardModalComponent } from './card-modal/card-modal.component';
-import {MatDialog, MatDialogModule, MatDialogRef} from "@angular/material/dialog";
+import { MatDialogModule } from "@angular/material/dialog";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
 import { ProfileComponent } from './profile/profile.component';
-import {BarcodeGeneratorModule} from "@syncfusion/ej2-angular-barcode-generator";
 import {NgxBarcodeModule} from "ngx-barcode";
+import {NgxQRCodeModule} from "@techiediaries/ngx-qrcode";
 
 @NgModule({
   declarations: [
@@ -50,6 +50,7 @@ import {NgxBarcodeModule} from "ngx-barcode";
     MatInputModule,
     MatSelectModule,
     NgxBarcodeModule,
+    NgxQRCodeModule,
   ]
 })
 export class HolderModule { }

@@ -1,7 +1,8 @@
 <h1 mat-dialog-title>{{data.name}}</h1>
 <div mat-dialog-content>
   <p *ngIf="hasDescription()">{{data.description}}</p>
-  <ngx-barcode [bc-value]="data.code" [bc-display-value]="true" [bc-width]="6"></ngx-barcode>
+  <ngx-barcode *ngIf="data.type === 'bc'" [bc-value]="data.code" [bc-display-value]="true" [bc-width]="6"></ngx-barcode>
+  <ngx-qrcode *ngIf="data.type === 'qr'" [value]="data.code" [width]="300"></ngx-qrcode>
 </div>
 <div mat-dialog-actions>
   <button mat-icon-button [routerLink]="['./new']">

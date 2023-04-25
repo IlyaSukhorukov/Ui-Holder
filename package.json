@@ -25,6 +25,7 @@
     "@ngrx/effects": "^15.4.0",
     "@ngrx/store": "^15.4.0",
     "@syncfusion/ej2-angular-barcode-generator": "^21.1.37-ngcc",
+    "@techiediaries/ngx-qrcode": "^9.1.0",
     "apollo-angular": "^4.2.1",
     "graphql": "^16",
     "keycloak-angular": "^13.0.0",

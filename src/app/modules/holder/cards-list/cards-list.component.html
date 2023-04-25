@@ -24,7 +24,7 @@
     </div>
     <div class="other-cards">
       <mat-card *ngFor="let card of unfavoriteCards">
-        <mat-card-content (click)="onCardClick(card.id, card.name, card.code, card.description)">
+        <mat-card-content (click)="onCardClick(card.id, card.name, card.code, card.description, card.type)">
           <span class="list-fav-name">{{card.name}}</span>
           <span>{{card.code}}</span>
         </mat-card-content>
@@ -33,7 +33,7 @@
   </div>
   <!-- Grid -->
   <div class="cards" *ngIf="!isListView">
-    <mat-card class="grid-card" *ngFor="let card of unfavoriteCards" (click)="onCardClick(card.id, card.name, card.code, card.description)">
+    <mat-card class="grid-card" *ngFor="let card of unfavoriteCards" (click)="onCardClick(card.id, card.name, card.code, card.description, card.type)">
       <mat-card-header>
         <mat-card-title>{{card.name}}</mat-card-title>
       </mat-card-header>
