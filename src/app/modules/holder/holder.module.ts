@@ -19,12 +19,14 @@ import {MatDialog, MatDialogModule, MatDialogRef} from "@angular/material/dialog
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
     CardsListComponent,
     CardFormComponent,
-    CardModalComponent
+    CardModalComponent,
+    ProfileComponent
   ],
   exports: [
     CardsListComponent
