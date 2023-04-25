@@ -20,6 +20,8 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
 import { ProfileComponent } from './profile/profile.component';
+import {BarcodeGeneratorModule} from "@syncfusion/ej2-angular-barcode-generator";
+import {NgxBarcodeModule} from "ngx-barcode";
 
 @NgModule({
   declarations: [
@@ -47,6 +49,7 @@ import { ProfileComponent } from './profile/profile.component';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
+    NgxBarcodeModule,
   ]
 })
 export class HolderModule { }

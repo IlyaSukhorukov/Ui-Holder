@@ -1,6 +1,7 @@
 <h1 mat-dialog-title>{{data.name}}</h1>
 <div mat-dialog-content>
-  <p>{{data.uuid}}</p>
+  <p *ngIf="hasDescription()">{{data.description}}</p>
+  <ngx-barcode [bc-value]="data.code" [bc-display-value]="true" [bc-width]="6"></ngx-barcode>
 </div>
 <div mat-dialog-actions>
   <button mat-icon-button [routerLink]="['./new']">

@@ -43,7 +43,7 @@ export class CardsListComponent implements OnInit, OnDestroy {
     this.isListView = $event.checked;
   }
 
-  onCardClick(uuid: string, name: string): void {
+  onCardClick(uuid: string, name: string, code: string, description: string): void {
     // console.log(uuid);
     const dialogRef = this.dialog.open(CardModalComponent, {
       /*minWidth: '75%',
@@ -53,7 +53,9 @@ export class CardsListComponent implements OnInit, OnDestroy {
       height: '90%',*/
       data: {
         uuid,
-        name
+        name,
+        code,
+        description
       }
     });
 

@@ -15,6 +15,8 @@ const generateQueryLoadCard = (uuid: string): string => `
     id_user
     id
     code
+    type
+    description
   }
 }
 `
@@ -22,12 +24,14 @@ const generateQueryLoadCard = (uuid: string): string => `
 const QUERY_LOAD_USER_CARDS = gql`
   query {
       cards {
-          code
-          id
-          id_user
-          is_favorite
-          name
-          stat_opened
+        code
+        id
+        id_user
+        is_favorite
+        name
+        stat_opened
+        type
+        description
       }
   }
 `
