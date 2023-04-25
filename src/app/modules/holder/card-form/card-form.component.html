@@ -1,4 +1,41 @@
 <div class="main" fxLayout="column" fxLayoutAlign="start center" >
   <mat-card class="card">
+    <mat-form-field class="form-filed" appearance="outline">
+      <mat-label>Наименование</mat-label>
+      <input matInput>
+    </mat-form-field>
+    <mat-form-field class="form-filed" appearance="outline">
+      <mat-label>Содержание</mat-label>
+      <input matInput>
+      <button matSuffix mat-icon-button aria-label="Clear">
+        <mat-icon>close</mat-icon>
+      </button>
+      <button matSuffix mat-icon-button aria-label="Clear" style="margin-right: 0.5em">
+        <mat-icon>photo_camera</mat-icon>
+      </button>
+    </mat-form-field>
+    <div fxLayout="row" fxLayoutAlign="start start">
+      <mat-form-field class="select" appearance="outline">
+        <mat-label>Тип</mat-label>
+        <mat-select>
+          <mat-option value="one">QR - код</mat-option>
+          <mat-option value="two">Баркод</mat-option>
+          <mat-option value="two">Другое</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="select" appearance="outline">
+        <mat-label>Доступ</mat-label>
+        <mat-select>
+          <mat-option value="one">Публичный</mat-option>
+          <mat-option value="two">Семья</mat-option>
+          <mat-option value="two">Приватный</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center">
+      <button mat-raised-button class="button">Отмена</button>
+      <span class="main-spacer"></span>
+      <button mat-raised-button class="button" color="primary">Создать</button>
+    </div>
   </mat-card>
 </div>
