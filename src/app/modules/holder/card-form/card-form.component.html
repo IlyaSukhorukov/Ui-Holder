@@ -1,12 +1,12 @@
 <div class="main" fxLayout="column" fxLayoutAlign="start center" >
-  <mat-card class="card">
+  <mat-card class="card" [formGroup]="formGroup">
     <mat-form-field class="form-filed" appearance="outline">
       <mat-label>Наименование</mat-label>
-      <input matInput>
+      <input matInput formControlName="name" required>
     </mat-form-field>
     <mat-form-field class="form-filed" appearance="outline">
       <mat-label>Содержание</mat-label>
-      <input matInput>
+      <input matInput formControlName="code" required>
       <button matSuffix mat-icon-button aria-label="Clear">
         <mat-icon>close</mat-icon>
       </button>
@@ -14,28 +14,32 @@
         <mat-icon>photo_camera</mat-icon>
       </button>
     </mat-form-field>
+    <mat-form-field class="form-filed" appearance="outline">
+      <mat-label>Описание</mat-label>
+      <input matInput formControlName="description">
+    </mat-form-field>
     <div fxLayout="row" fxLayoutAlign="start start">
       <mat-form-field class="select" appearance="outline">
         <mat-label>Тип</mat-label>
-        <mat-select>
-          <mat-option value="one">QR - код</mat-option>
-          <mat-option value="two">Баркод</mat-option>
-          <mat-option value="two">Другое</mat-option>
+        <mat-select formControlName="type">
+          <mat-option value="qr">QR - код</mat-option>
+          <mat-option value="bc">Баркод</mat-option>
+          <mat-option value="other">Другое</mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field class="select" appearance="outline">
         <mat-label>Доступ</mat-label>
-        <mat-select>
-          <mat-option value="one">Публичный</mat-option>
-          <mat-option value="two">Семья</mat-option>
-          <mat-option value="two">Приватный</mat-option>
+        <mat-select formControlName="access">
+          <mat-option value="public">Публичный</mat-option>
+          <mat-option value="family">Семья</mat-option>
+          <mat-option value="private">Приватный</mat-option>
         </mat-select>
       </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center">
       <button mat-raised-button class="button">Отмена</button>
       <span class="main-spacer"></span>
-      <button mat-raised-button class="button" color="primary">Создать</button>
+      <button mat-raised-button class="button" color="primary" (click)="onCreate()">Создать</button>
     </div>
   </mat-card>
 </div>

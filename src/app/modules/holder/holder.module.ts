@@ -22,6 +22,7 @@ import {MatSelectModule} from "@angular/material/select";
 import { ProfileComponent } from './profile/profile.component';
 import {NgxBarcodeModule} from "ngx-barcode";
 import {NgxQRCodeModule} from "@techiediaries/ngx-qrcode";
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -33,24 +34,25 @@ import {NgxQRCodeModule} from "@techiediaries/ngx-qrcode";
   exports: [
     CardsListComponent
   ],
-  imports: [
-    CommonModule,
-    StoreModule.forFeature(stateFeatureKey, cardsReducer, {metaReducers}),
-    EffectsModule.forFeature([HolderStoreEffects]),
-    MatCardModule,
-    MatButtonToggleModule,
-    MatSlideToggleModule,
-    FlexLayoutModule,
-    MatGridListModule,
-    MatButtonModule,
-    MatIconModule,
-    RouterModule,
-    MatDialogModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    NgxBarcodeModule,
-    NgxQRCodeModule,
-  ]
+    imports: [
+        CommonModule,
+        StoreModule.forFeature(stateFeatureKey, cardsReducer, {metaReducers}),
+        EffectsModule.forFeature([HolderStoreEffects]),
+        MatCardModule,
+        MatButtonToggleModule,
+        MatSlideToggleModule,
+        FlexLayoutModule,
+        MatGridListModule,
+        MatButtonModule,
+        MatIconModule,
+        RouterModule,
+        MatDialogModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+        NgxBarcodeModule,
+        NgxQRCodeModule,
+        ReactiveFormsModule,
+    ]
 })
 export class HolderModule { }

@@ -6,6 +6,7 @@ import {Store} from "@ngrx/store";
 import {loadCard} from "../store/holder-store.actions";
 import {Card} from "../store/schema";
 import {selectCard} from "../store/holder-store.selectors";
+import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-card-form',
@@ -18,8 +19,20 @@ export class CardFormComponent implements OnInit, OnDestroy {
   private _uuid: string | null = null;
 
   public card: Card | null = null;
+  public formGroup: FormGroup;
 
-  constructor(private _route: ActivatedRoute, private _store: Store) { }
+  constructor(private _route: ActivatedRoute, private _store: Store, private _fb: FormBuilder) {
+    this.formGroup = this._fb.group({...new Card});
+  }
+
+  /*private static _fb(): FormGroup {
+    return new FormGroup<any>({
+      name: new FormControl(null),
+      code: new FormControl(null),
+      type: new FormControl(null),
+      access: new FormControl(null),
+    });
+  }*/
 
   ngOnInit(): void {
     this.subscribeOnCard();
@@ -42,6 +55,10 @@ export class CardFormComponent implements OnInit, OnDestroy {
         console.log(this.card);
       }
     })
+  }
+
+  onCreate(): void {
+    console.log(this.formGroup.getRawValue());
   }
 
   ngOnDestroy(): void {
