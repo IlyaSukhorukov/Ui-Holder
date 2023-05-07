@@ -1,0 +1,14 @@
+<mat-card >
+  <mat-card-content>
+    <zxing-scanner [formats]="allowedFormats" (scanSuccess)="handleQrCodeResult($event)"></zxing-scanner>
+    <div class="result">
+      <h4 *ngIf="!qrResultString">Наведите камеру на код...</h4>
+      <h4 *ngIf="qrResultString">{{qrResultString}}</h4>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center">
+      <button mat-raised-button class="button" (click)="onClose()">Отмена</button>
+      <span class="main-spacer"></span>
+      <button mat-raised-button class="button" color="primary" (click)="onSubmit()">Создать</button>
+    </div>
+  </mat-card-content>
+</mat-card>

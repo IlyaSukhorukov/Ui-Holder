@@ -23,13 +23,16 @@ import { ProfileComponent } from './profile/profile.component';
 import {NgxBarcodeModule} from "ngx-barcode";
 import {NgxQRCodeModule} from "@techiediaries/ngx-qrcode";
 import {ReactiveFormsModule} from "@angular/forms";
+import { ScanModalComponent } from './scan-modal/scan-modal.component';
+import {ZXingScannerModule} from "@zxing/ngx-scanner";
 
 @NgModule({
   declarations: [
     CardsListComponent,
     CardFormComponent,
     CardModalComponent,
-    ProfileComponent
+    ProfileComponent,
+    ScanModalComponent
   ],
   exports: [
     CardsListComponent
@@ -53,6 +56,7 @@ import {ReactiveFormsModule} from "@angular/forms";
         NgxBarcodeModule,
         NgxQRCodeModule,
         ReactiveFormsModule,
+        ZXingScannerModule,
     ]
 })
 export class HolderModule { }

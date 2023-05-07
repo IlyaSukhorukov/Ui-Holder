@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
-import {isEmpty, isNil} from "lodash";
+import { isEmpty } from "lodash";
 
 @Component({
   selector: 'app-card-modal',

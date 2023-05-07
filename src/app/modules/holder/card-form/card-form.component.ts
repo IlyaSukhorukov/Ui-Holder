@@ -1,12 +1,15 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {Subject, takeUntil} from "rxjs";
-import {isNil} from "lodash";
+import {isEmpty, isNil} from "lodash";
 import {Store} from "@ngrx/store";
 import {loadCard} from "../store/holder-store.actions";
 import {Card} from "../store/schema";
 import {selectCard} from "../store/holder-store.selectors";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {CardModalComponent} from "../card-modal/card-modal.component";
+import {ScanModalComponent} from "../scan-modal/scan-modal.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-card-form',
@@ -21,7 +24,7 @@ export class CardFormComponent implements OnInit, OnDestroy {
   public card: Card | null = null;
   public formGroup: FormGroup;
 
-  constructor(private _route: ActivatedRoute, private _store: Store, private _fb: FormBuilder) {
+  constructor(private _route: ActivatedRoute, private _store: Store, private _fb: FormBuilder, public dialog: MatDialog) {
     this.formGroup = this._fb.group({...new Card});
     this._setFormGroup();
   }
@@ -64,18 +67,32 @@ export class CardFormComponent implements OnInit, OnDestroy {
   }
 
   onCreate(): void {
-    // TODO validate
     if (this.formGroup.valid) {
-      if (isNil(this.formGroup.getRawValue().type)) {
+      if (isEmpty(this.formGroup.getRawValue().type)) {
         this.formGroup.patchValue({type: 'other'});
       }
-      if (isNil(this.formGroup.getRawValue().access)) {
+      if (isEmpty(this.formGroup.getRawValue().access)) {
         this.formGroup.patchValue({access: 'private'});
       }
       console.log(this.formGroup.getRawValue());
     } else {
       this.formGroup.markAllAsTouched();
     }
+  }
+
+  onScan(): void {
+    console.log('oy hi!')
+    const dialogRef = this.dialog.open(ScanModalComponent, {
+      width: '50em',
+      maxWidth: '69em',
+      maxHeight: '50em',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (!isEmpty(result)) {
+        this.formGroup.patchValue({ code: result });
+      }
+    });
   }
 
   isShowScanIcon(): boolean {
