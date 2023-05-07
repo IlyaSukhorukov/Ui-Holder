@@ -25,10 +25,16 @@
   max-width: 69em;
   margin-top: 1em;
   display: block;
-  background-color: green;
+}
+.list-card {
+  margin-top: 1em;
+}
+.grid-tile {
+
 }
 .grid-card {
-  width: 10em;
+  width: 15em;
+  height: 15em;
 }
 .list-fav-name {
   font-size: 1.5em;
