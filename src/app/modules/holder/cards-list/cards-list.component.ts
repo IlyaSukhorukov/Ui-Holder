@@ -8,6 +8,7 @@ import {isEmpty, isNil} from "lodash";
 import {MatSlideToggleChange} from "@angular/material/slide-toggle";
 import {MatDialog} from "@angular/material/dialog";
 import {CardModalComponent} from "../card-modal/card-modal.component";
+import {CURRENT_USER_PUBLIC_ID, CURRENT_USER_UUID} from "../../../core/default-values";
 
 @Component({
   selector: 'app-cards-list',
@@ -26,7 +27,7 @@ export class CardsListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscribeOnCardsList();
-    this._store.dispatch(loadUserCards());
+    this._store.dispatch(loadUserCards({id: CURRENT_USER_PUBLIC_ID}));
   }
 
   subscribeOnCardsList(): void {

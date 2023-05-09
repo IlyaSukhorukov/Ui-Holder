@@ -1,3 +1,6 @@
+.main-spacer {
+  flex: 1 1 auto;
+}
 .main {
   display: flex;
   align-items: center;
@@ -21,6 +24,13 @@
 .card-info-title {
   margin-top: 0.5em;
   margin-left: 0.5em;
+  height: 1.5em;
+}
+.card-info-subtitle {
+  margin-left: 1em;
+}
+.add-friend-button {
+  margin-right: 0.5em;
 }
 .profile-pic-button {
   background-color: #EBEBEB;
@@ -29,4 +39,7 @@
 }
 .profile-pic-image {
   scale: 400%;
+}
+.stats-text {
+  font-size: 1.5em;
 }

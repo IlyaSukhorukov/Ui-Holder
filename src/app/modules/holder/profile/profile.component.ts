@@ -5,7 +5,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {Store} from "@ngrx/store";
 import {FormBuilder} from "@angular/forms";
 import {selectUser} from "../store/holder-store.selectors";
-import {User} from "../store/schema";
+import {Card, User} from "../store/schema";
 import {loadUser} from "../store/holder-store.actions";
 
 @Component({
@@ -18,8 +18,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
   private _unsubscribe$ = new Subject<void>();
 
   public currentUser: User | null = null;
-
   public user_id: string | null = null;
+  public unfavoriteCards: Card[] = [];
 
   constructor(private _router: Router, private _route: ActivatedRoute, private _store: Store, private _fb: FormBuilder) {
     /*this.formGroup = this._fb.group({...new Card});

@@ -19,7 +19,7 @@ export const userLoaded = createAction(HolderActionTypes.userLoaded, props<{user
 export const loadCard = createAction(HolderActionTypes.loadCard, props<{uuid: string}>());
 export const cardLoaded = createAction(HolderActionTypes.cardLoaded, props<{card: Card}>());
 
-export const loadUserCards = createAction(HolderActionTypes.loadUserCards);
+export const loadUserCards = createAction(HolderActionTypes.loadUserCards, props<{id: string}>());
 export const UserCardsLoaded = createAction(HolderActionTypes.userCardsLoaded, props<{list: Card[]}>());
 
 export const createCard = createAction(HolderActionTypes.createCard, props<{card: Card}>());

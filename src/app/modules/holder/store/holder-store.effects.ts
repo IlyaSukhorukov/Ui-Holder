@@ -38,6 +38,21 @@ const generateQueryLoadCard = (uuid: string): string => `
 }
 `
 
+const generateQueryLoadUserCards = (id: string): string => `
+  query {
+      cards(where: {id_user: {_eq: "${id}"}}) {
+        code
+        id
+        id_user
+        is_favorite
+        name
+        stat_opened
+        type
+        description
+      }
+  }
+`
+
 const QUERY_LOAD_USER_CARDS = gql`
   query {
       cards {
@@ -102,9 +117,9 @@ export class HolderStoreEffects {
   $getUserCards = createEffect(() =>
     this.actions$.pipe(
       ofType(loadUserCards),
-      exhaustMap(() => {
+      exhaustMap(({ id }) => {
         const qo: QueryOptions = {
-          query: QUERY_LOAD_USER_CARDS,
+          query: gql`${generateQueryLoadUserCards(id)}`,
           fetchPolicy: 'no-cache',
         }
         return this._apollo.query<{list: Card[]}>(qo).pipe(
