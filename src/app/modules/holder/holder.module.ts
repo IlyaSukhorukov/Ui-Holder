@@ -25,6 +25,9 @@ import {NgxQRCodeModule} from "@techiediaries/ngx-qrcode";
 import {ReactiveFormsModule} from "@angular/forms";
 import { ScanModalComponent } from './scan-modal/scan-modal.component';
 import {ZXingScannerModule} from "@zxing/ngx-scanner";
+import { FamilyPageComponent } from './family-page/family-page.component';
+import {MatTabsModule} from "@angular/material/tabs";
+import { SearchComponent } from './search/search.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +35,9 @@ import {ZXingScannerModule} from "@zxing/ngx-scanner";
     CardFormComponent,
     CardModalComponent,
     ProfileComponent,
-    ScanModalComponent
+    ScanModalComponent,
+    FamilyPageComponent,
+    SearchComponent
   ],
   exports: [
     CardsListComponent
@@ -57,6 +62,7 @@ import {ZXingScannerModule} from "@zxing/ngx-scanner";
         NgxQRCodeModule,
         ReactiveFormsModule,
         ZXingScannerModule,
+        MatTabsModule,
     ]
 })
 export class HolderModule { }
