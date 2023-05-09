@@ -1,1 +1,23 @@
-<p>profile works!</p>
+<div *ngIf="!currentUser" class="main" fxLayout="row" fxLayoutAlign="center start">
+  <mat-card>
+    <mat-card-title class="card-not-found-title">
+      <h1>Пользователь с таким id не существует</h1>
+    </mat-card-title>
+  </mat-card>
+</div>
+<div *ngIf="currentUser" class="main" fxLayout="row" fxLayoutAlign="center start">
+  <mat-card class="card-pic">
+    <mat-card-content>
+      <button mat-icon-button class="profile-pic-button">
+        <mat-icon aria-hidden="false" aria-label="Иконка профиля" class="profile-pic-image">person</mat-icon>
+      </button>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="card-info">
+    <mat-card-title class="card-info-title">
+      <h1>{{ currentUser?.public_name || 'Данный пользователь скрыл личную информацию' }}</h1>
+    </mat-card-title>
+    <mat-card-content>
+    </mat-card-content>
+  </mat-card>
+</div>

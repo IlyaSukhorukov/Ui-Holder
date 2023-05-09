@@ -8,7 +8,7 @@ const routes: Routes = [
   { path: '', component: CardsListComponent},
   { path: 'new', component: CardFormComponent},
   { path: 'edit/:uuid', component: CardFormComponent},
-  { path: 'profile', component: ProfileComponent},
+  { path: 'profile/:id', component: ProfileComponent},
   { path: '**', redirectTo: '' }
 ];
 

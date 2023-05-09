@@ -8,3 +8,8 @@ export class Card {
   access: string = '';
   description: string = '';
 }
+
+export class User {
+  public_id: string = '';
+  public_name: string = '';
+}

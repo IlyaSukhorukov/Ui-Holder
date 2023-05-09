@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {CURRENT_USER_PUBLIC_ID} from "../../../core/default-values";
 
 @Component({
   selector: 'app-main-page',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./main-page.component.scss']
 })
 export class MainPageComponent {
-
+  public id = CURRENT_USER_PUBLIC_ID;
 }

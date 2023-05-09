@@ -7,7 +7,6 @@ import {createCard, loadCard} from "../store/holder-store.actions";
 import {Card} from "../store/schema";
 import {selectCard} from "../store/holder-store.selectors";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {CardModalComponent} from "../card-modal/card-modal.component";
 import {ScanModalComponent} from "../scan-modal/scan-modal.component";
 import {MatDialog} from "@angular/material/dialog";
 import {CURRENT_USER_UUID} from "../../../core/default-values";

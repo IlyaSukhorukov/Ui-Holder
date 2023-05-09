@@ -2,9 +2,26 @@ import {Injectable} from "@angular/core";
 import {Actions, createEffect, ofType} from "@ngrx/effects";
 import { exhaustMap, map, tap } from 'rxjs/operators';
 import {Apollo, gql} from "apollo-angular";
-import {cardCreated, cardLoaded, createCard, loadCard, loadUserCards, UserCardsLoaded} from "./holder-store.actions";
-import {Card} from "./schema";
+import {
+  cardCreated,
+  cardLoaded,
+  createCard,
+  loadCard,
+  loadUser,
+  loadUserCards,
+  UserCardsLoaded, userLoaded
+} from "./holder-store.actions";
+import {Card, User} from "./schema";
 import {QueryOptions} from "@apollo/client/core";
+
+const generateQueryLoadUser = (public_id: string): string => `
+  query {
+  users(where: {public_id: {_eq: "${public_id}"}}) {
+    public_name
+    public_id
+  }
+}
+`
 
 const generateQueryLoadCard = (uuid: string): string => `
   query {
@@ -36,7 +53,7 @@ const QUERY_LOAD_USER_CARDS = gql`
   }
 `
 const QUERY_ADD_CARD = gql`
-  mutation InsertCard($card: cards_insert_input!) {
+  mutation ($card: cards_insert_input!) {
     insert_cards_one(object: $card) {
       name
       type
@@ -51,6 +68,21 @@ const QUERY_ADD_CARD = gql`
 @Injectable()
 export class HolderStoreEffects {
   constructor(private actions$: Actions, private _apollo: Apollo) {}
+
+  $getUser = createEffect(() =>
+  this.actions$.pipe(
+    ofType(loadUser),
+    exhaustMap(({ public_id }) => {
+      const qo: QueryOptions = {
+        query: gql`${generateQueryLoadUser(public_id)}`,
+        fetchPolicy: 'no-cache',
+      }
+      return this._apollo.query<{ user: User }>(qo).pipe(
+        // @ts-ignore
+        map(({data}) => userLoaded({user: data.users[0]}))
+      );
+    })
+  ));
 
   $getCard = createEffect(() =>
     this.actions$.pipe(

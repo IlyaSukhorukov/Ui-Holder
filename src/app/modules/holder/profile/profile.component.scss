@@ -1,0 +1,32 @@
+.main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 1em;
+}
+.card-not-found-title {
+  margin-left: 1em;
+  margin-right: 1em;
+  margin-top: 1em;
+}
+.card-pic {
+  width: 11em;
+  height: 11em;
+}
+.card-info {
+  width: 57em;
+  height: 11em;
+  margin-left: 1em;
+}
+.card-info-title {
+  margin-top: 0.5em;
+  margin-left: 0.5em;
+}
+.profile-pic-button {
+  background-color: #EBEBEB;
+  width: 5em;
+  height: 5em;
+}
+.profile-pic-image {
+  scale: 400%;
+}
