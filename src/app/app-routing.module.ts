@@ -4,6 +4,7 @@ import {CardFormComponent} from "./modules/holder/card-form/card-form.component"
 import {CardsListComponent} from "./modules/holder/cards-list/cards-list.component";
 import {ProfileComponent} from "./modules/holder/profile/profile.component";
 import {FamilyPageComponent} from "./modules/holder/family-page/family-page.component";
+import {SearchComponent} from "./modules/holder/search/search.component";
 
 const routes: Routes = [
   { path: '', component: CardsListComponent},
@@ -11,6 +12,7 @@ const routes: Routes = [
   { path: 'edit/:uuid', component: CardFormComponent},
   { path: 'profile/:id', component: ProfileComponent},
   { path: 'family', component: FamilyPageComponent},
+  { path: 'search', component: SearchComponent},
   { path: '**', redirectTo: '' }
 ];
 

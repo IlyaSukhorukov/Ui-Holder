@@ -1,0 +1,15 @@
+.main-spacer {
+  flex: 1 1 auto;
+}
+.main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 1em;
+}
+.card-search {
+  width: 69em;
+  min-width: 40em;
+  max-width: 69em;
+  height: 4em;
+}
