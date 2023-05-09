@@ -4,15 +4,15 @@ import { exhaustMap, map, tap } from 'rxjs/operators';
 import {Apollo, gql} from "apollo-angular";
 import {
   cardCreated,
-  cardLoaded,
+  cardLoaded, cardUpdated,
   createCard,
   loadCard,
   loadUser,
-  loadUserCards,
+  loadUserCards, updateCard,
   UserCardsLoaded, userLoaded
 } from "./holder-store.actions";
 import {Card, User} from "./schema";
-import {QueryOptions} from "@apollo/client/core";
+import {MutationOptions, QueryOptions} from "@apollo/client/core";
 
 const generateQueryLoadUser = (public_id: string): string => `
   query {
@@ -76,6 +76,24 @@ const QUERY_ADD_CARD = gql`
       description
       access
       code
+    }
+  }
+`
+
+const MUTATION_UPDATE_CARD = gql`
+  mutation ($id: uuid, $card: cards_set_input!) {
+    update_cards(where: { id: { _eq: $id } }, _set: $card) {
+      affected_rows
+      returning {
+        code
+        id
+        id_user
+        is_favorite
+        name
+        stat_opened
+        type
+        description
+      }
     }
   }
 `
@@ -144,7 +162,29 @@ export class HolderStoreEffects {
           // @ts-ignore
           map(({data}) => cardCreated({card: JSON.parse(JSON.stringify(data['cards']))})),
           tap((e) => {
-            console.log(e)
+            // console.log(e) debug
+          }),
+        );
+      })
+    ));
+
+  $updateCard = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateCard),
+      exhaustMap(({ card }) => {
+        const mutationOptions: MutationOptions = {
+          mutation: MUTATION_UPDATE_CARD,
+          variables: {
+            id: card.id,
+            card: card
+          },
+          fetchPolicy: 'no-cache',
+        }
+        return this._apollo.mutate<{card: Card}>(mutationOptions).pipe(
+          // @ts-ignore
+          map(({data}) => cardUpdated({card: JSON.parse(JSON.stringify(data['update_cards']['returning'][0]))})),
+          tap((e) => {
+            // console.log('updated ',e); debug
           }),
         );
       })

@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {Subject, takeUntil} from "rxjs";
 import {isEmpty, isNil} from "lodash";
 import {Store} from "@ngrx/store";
-import {createCard, loadCard} from "../store/holder-store.actions";
+import {clean, createCard, loadCard, updateCard} from "../store/holder-store.actions";
 import {Card} from "../store/schema";
 import {selectCard} from "../store/holder-store.selectors";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
@@ -55,7 +55,7 @@ export class CardFormComponent implements OnInit, OnDestroy {
     this._store.select(selectCard).pipe(takeUntil(this._unsubscribe$)).subscribe((card) => {
       if (!isNil(card)) {
         this.card = card;
-        console.log(this.card);
+        this.formGroup.patchValue(card);
       }
     })
   }
@@ -76,6 +76,17 @@ export class CardFormComponent implements OnInit, OnDestroy {
     }
   }
 
+  onUpdate(): void {
+    if (this.formGroup.valid) {
+      const updatedCard = this.patchDefaultValues();
+      console.log(updatedCard)
+      this._store.dispatch(updateCard({ card: updatedCard }));
+      this._router.navigate(['.*']);
+    } else {
+      this.formGroup.markAllAsTouched();
+    }
+  }
+
   private patchDefaultValues(): Card {
     if (isEmpty(this.formGroup.getRawValue().type)) {
       this.formGroup.patchValue({type: 'other'});
@@ -84,7 +95,10 @@ export class CardFormComponent implements OnInit, OnDestroy {
       this.formGroup.patchValue({access: 'private'});
     }
     const updatedCard = this.formGroup.getRawValue();
-    delete updatedCard.id;
+    if (isNil(this.card)) {
+      delete updatedCard.id;
+    }
+    delete updatedCard.stat_opened;
     updatedCard.id_user = CURRENT_USER_PUBLIC_ID;
     return updatedCard;
   }
@@ -114,6 +128,7 @@ export class CardFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this._store.dispatch(clean());
     this._unsubscribe$.next();
     this._unsubscribe$.complete();
   }

@@ -6,7 +6,7 @@
   <p *ngIf="isOtherType()" class="other-code">{{ data.code }}</p>
 </div>
 <div mat-dialog-actions>
-  <button mat-icon-button [routerLink]="['./new']">
+  <button mat-icon-button [routerLink]="['./edit/',data.uuid]" (click)="onClose()">
     <mat-icon aria-hidden="false" aria-label="Редактировать">edit</mat-icon>
   </button>
   <button mat-icon-button [routerLink]="['./new']">

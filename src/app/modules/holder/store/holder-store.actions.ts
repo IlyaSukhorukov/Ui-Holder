@@ -10,6 +10,8 @@ export enum HolderActionTypes {
   userCardsLoaded = '[Holder] Cards Loaded',
   createCard = '[Holder] Create Card',
   cardCreated = '[Holder] Card Created',
+  updateCard = '[Holder] Update Card',
+  cardUpdated = '[Holder] Card Updated',
   clean = '[Holder] Clean store state',
 }
 
@@ -24,5 +26,8 @@ export const UserCardsLoaded = createAction(HolderActionTypes.userCardsLoaded, p
 
 export const createCard = createAction(HolderActionTypes.createCard, props<{card: Card}>());
 export const cardCreated = createAction(HolderActionTypes.cardCreated, props<{card: Card}>());
+
+export const updateCard = createAction(HolderActionTypes.updateCard, props<{card: Card}>());
+export const cardUpdated = createAction(HolderActionTypes.cardUpdated, props<{card: Card}>());
 
 export const clean = createAction(HolderActionTypes.clean);

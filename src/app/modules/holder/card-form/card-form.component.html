@@ -44,7 +44,8 @@
     <div fxLayout="row" fxLayoutAlign="start center">
       <button mat-raised-button class="button" [routerLink]="['.*']">Отмена</button>
       <span class="main-spacer"></span>
-      <button mat-raised-button class="button" color="primary" (click)="onCreate()">Создать</button>
+      <button *ngIf="!card" mat-raised-button class="button" color="primary" (click)="onCreate()">Создать</button>
+      <button *ngIf="card" mat-raised-button class="button" color="primary" (click)="onUpdate()">Обновить</button>
     </div>
   </mat-card>
 </div>
