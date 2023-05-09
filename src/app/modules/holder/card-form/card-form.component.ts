@@ -1,15 +1,16 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Subject, takeUntil} from "rxjs";
 import {isEmpty, isNil} from "lodash";
 import {Store} from "@ngrx/store";
-import {loadCard} from "../store/holder-store.actions";
+import {createCard, loadCard} from "../store/holder-store.actions";
 import {Card} from "../store/schema";
 import {selectCard} from "../store/holder-store.selectors";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {CardModalComponent} from "../card-modal/card-modal.component";
 import {ScanModalComponent} from "../scan-modal/scan-modal.component";
 import {MatDialog} from "@angular/material/dialog";
+import {CURRENT_USER_UUID} from "../../../core/default-values";
 
 @Component({
   selector: 'app-card-form',
@@ -24,7 +25,7 @@ export class CardFormComponent implements OnInit, OnDestroy {
   public card: Card | null = null;
   public formGroup: FormGroup;
 
-  constructor(private _route: ActivatedRoute, private _store: Store, private _fb: FormBuilder, public dialog: MatDialog) {
+  constructor(private _router: Router, private _route: ActivatedRoute, private _store: Store, private _fb: FormBuilder, public dialog: MatDialog) {
     this.formGroup = this._fb.group({...new Card});
     this._setFormGroup();
   }
@@ -68,16 +69,25 @@ export class CardFormComponent implements OnInit, OnDestroy {
 
   onCreate(): void {
     if (this.formGroup.valid) {
-      if (isEmpty(this.formGroup.getRawValue().type)) {
-        this.formGroup.patchValue({type: 'other'});
-      }
-      if (isEmpty(this.formGroup.getRawValue().access)) {
-        this.formGroup.patchValue({access: 'private'});
-      }
-      console.log(this.formGroup.getRawValue());
+      const updatedCard = this.patchDefaultValues();
+      this._store.dispatch(createCard({ card: updatedCard }));
+      this._router.navigate(['.*']);
     } else {
       this.formGroup.markAllAsTouched();
     }
+  }
+
+  private patchDefaultValues(): Card {
+    if (isEmpty(this.formGroup.getRawValue().type)) {
+      this.formGroup.patchValue({type: 'other'});
+    }
+    if (isEmpty(this.formGroup.getRawValue().access)) {
+      this.formGroup.patchValue({access: 'private'});
+    }
+    const updatedCard = this.formGroup.getRawValue();
+    delete updatedCard.id;
+    updatedCard.id_user = CURRENT_USER_UUID;
+    return updatedCard;
   }
 
   onScan(): void {
