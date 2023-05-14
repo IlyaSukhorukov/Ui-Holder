@@ -1,5 +1,5 @@
 import {createAction, props} from "@ngrx/store";
-import {Card, User} from "./schema";
+import {Card, FriendRequest, User} from "./schema";
 
 export enum HolderActionTypes {
   loadUser = '[Holder] Load User',
@@ -13,6 +13,8 @@ export enum HolderActionTypes {
   updateCard = '[Holder] Update Card',
   cardUpdated = '[Holder] Card Updated',
   clean = '[Holder] Clean store state',
+  addFriend = '[Holder] Add Friend',
+  friendAdded = '[Holder] Friend Added',
 }
 
 export const loadUser = createAction(HolderActionTypes.loadUser, props<{public_id: string}>());
@@ -29,5 +31,8 @@ export const cardCreated = createAction(HolderActionTypes.cardCreated, props<{ca
 
 export const updateCard = createAction(HolderActionTypes.updateCard, props<{card: Card}>());
 export const cardUpdated = createAction(HolderActionTypes.cardUpdated, props<{card: Card}>());
+
+export const addFriend = createAction(HolderActionTypes.addFriend, props<{request: FriendRequest}>());
+export const friendAdded = createAction(HolderActionTypes.friendAdded, props<{request: FriendRequest}>());
 
 export const clean = createAction(HolderActionTypes.clean);

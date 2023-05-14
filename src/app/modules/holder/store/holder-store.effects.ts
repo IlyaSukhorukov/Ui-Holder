@@ -3,16 +3,18 @@ import {Actions, createEffect, ofType} from "@ngrx/effects";
 import { exhaustMap, map, tap } from 'rxjs/operators';
 import {Apollo, gql} from "apollo-angular";
 import {
+  addFriend,
   cardCreated,
   cardLoaded, cardUpdated,
-  createCard,
+  createCard, friendAdded,
   loadCard,
   loadUser,
   loadUserCards, updateCard,
   UserCardsLoaded, userLoaded
 } from "./holder-store.actions";
-import {Card, User} from "./schema";
+import {Card, FriendRequest, User} from "./schema";
 import {MutationOptions, QueryOptions} from "@apollo/client/core";
+import {omit} from "lodash";
 
 const generateQueryLoadUser = (public_id: string): string => `
   query {
@@ -67,7 +69,8 @@ const QUERY_LOAD_USER_CARDS = gql`
       }
   }
 `
-const QUERY_ADD_CARD = gql`
+
+const MUTATION_ADD_CARD = gql`
   mutation ($card: cards_insert_input!) {
     insert_cards_one(object: $card) {
       name
@@ -94,6 +97,16 @@ const MUTATION_UPDATE_CARD = gql`
         type
         description
       }
+    }
+  }
+`
+
+const MUTATION_ADD_FRIEND = gql`
+  mutation ($request: family_insert_input!) {
+    insert_family_one(object: $request) {
+      from
+      to
+      status
     }
   }
 `
@@ -152,7 +165,7 @@ export class HolderStoreEffects {
       ofType(createCard),
       exhaustMap(({ card }) => {
         const qo: QueryOptions = {
-          query: QUERY_ADD_CARD,
+          query: MUTATION_ADD_CARD,
           variables: {
             card
           },
@@ -186,6 +199,25 @@ export class HolderStoreEffects {
           tap((e) => {
             // console.log('updated ',e); debug
           }),
+        );
+      })
+    ));
+
+  $addFriend = createEffect(() =>
+    this.actions$.pipe(
+      ofType(addFriend),
+      exhaustMap(({ request }) => {
+        const rq = omit(request, ['uuid']);
+        const mutationOptions: MutationOptions = {
+          mutation: MUTATION_ADD_FRIEND,
+          variables: {
+            request: rq
+          },
+          fetchPolicy: 'no-cache',
+        }
+        return this._apollo.mutate<{request: FriendRequest}>(mutationOptions).pipe(
+          // @ts-ignore
+          map(({data}) => friendAdded({request: JSON.parse(JSON.stringify(data['insert_family_one']))})),
         );
       })
     ));

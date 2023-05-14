@@ -5,8 +5,8 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {Store} from "@ngrx/store";
 import {FormBuilder} from "@angular/forms";
 import {selectUser} from "../store/holder-store.selectors";
-import {Card, User} from "../store/schema";
-import {loadUser} from "../store/holder-store.actions";
+import {Card, FriendRequest, User} from "../store/schema";
+import {addFriend, loadUser} from "../store/holder-store.actions";
 import {CURRENT_USER_PUBLIC_ID} from "../../../core/default-values";
 import {MatSnackBar} from "@angular/material/snack-bar";
 
@@ -58,12 +58,21 @@ export class ProfileComponent implements OnInit, OnDestroy {
     });
   }
 
+  private createRequest(): FriendRequest {
+    return {
+      uuid: null,
+      from: CURRENT_USER_PUBLIC_ID,
+      to: this.user_id || '',
+      status: 'request',
+    };
+  }
+
   public isMyProfile(): boolean {
     return this.user_id === CURRENT_USER_PUBLIC_ID;
   }
 
   public onAddFriend(): void {
-
+    this._store.dispatch(addFriend({request: this.createRequest()}));
 
     this._snackBar.open(
       "Запрос на добавление в друзья отправлен",
