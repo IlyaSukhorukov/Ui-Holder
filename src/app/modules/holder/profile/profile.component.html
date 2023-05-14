@@ -17,7 +17,7 @@
     <mat-card-title class="card-info-title" fxLayout="row">
       <h1>{{ currentUser?.public_name || 'Данный пользователь скрыл личную информацию' }}</h1>
       <div class="main-spacer"></div>
-      <button mat-icon-button class="add-friend-button">
+      <button *ngIf="!isMyProfile()" mat-icon-button class="add-friend-button" (click)="onAddFriend()">
         <mat-icon aria-hidden="false" aria-label="Иконка профиля">person_add</mat-icon>
       </button>
     </mat-card-title>

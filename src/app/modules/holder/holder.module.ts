@@ -28,6 +28,7 @@ import {ZXingScannerModule} from "@zxing/ngx-scanner";
 import { FamilyPageComponent } from './family-page/family-page.component';
 import {MatTabsModule} from "@angular/material/tabs";
 import { SearchComponent } from './search/search.component';
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { SearchComponent } from './search/search.component';
         ReactiveFormsModule,
         ZXingScannerModule,
         MatTabsModule,
+        MatSnackBarModule,
     ]
 })
 export class HolderModule { }

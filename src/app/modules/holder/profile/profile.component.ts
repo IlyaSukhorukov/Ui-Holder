@@ -7,6 +7,8 @@ import {FormBuilder} from "@angular/forms";
 import {selectUser} from "../store/holder-store.selectors";
 import {Card, User} from "../store/schema";
 import {loadUser} from "../store/holder-store.actions";
+import {CURRENT_USER_PUBLIC_ID} from "../../../core/default-values";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-profile',
@@ -21,7 +23,12 @@ export class ProfileComponent implements OnInit, OnDestroy {
   public user_id: string | null = null;
   public unfavoriteCards: Card[] = [];
 
-  constructor(private _router: Router, private _route: ActivatedRoute, private _store: Store, private _fb: FormBuilder) {
+  constructor(
+    private _router: Router,
+    private _route: ActivatedRoute,
+    private _store: Store,
+    private _fb: FormBuilder,
+    private _snackBar: MatSnackBar) {
     /*this.formGroup = this._fb.group({...new Card});
     this._setFormGroup();*/
   }
@@ -49,6 +56,21 @@ export class ProfileComponent implements OnInit, OnDestroy {
         // this._store.dispatch(loadCard({uuid: this.user_id}));
       }
     });
+  }
+
+  public isMyProfile(): boolean {
+    return this.user_id === CURRENT_USER_PUBLIC_ID;
+  }
+
+  public onAddFriend(): void {
+
+
+    this._snackBar.open(
+      "Запрос на добавление в друзья отправлен",
+      "Закрыть",
+      {
+        duration: 3000
+      });
   }
 
   ngOnDestroy(): void {

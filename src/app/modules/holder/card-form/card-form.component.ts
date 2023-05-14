@@ -9,7 +9,7 @@ import {selectCard} from "../store/holder-store.selectors";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ScanModalComponent} from "../scan-modal/scan-modal.component";
 import {MatDialog} from "@angular/material/dialog";
-import {CURRENT_USER_PUBLIC_ID, CURRENT_USER_UUID} from "../../../core/default-values";
+import { CURRENT_USER_PUBLIC_ID } from "../../../core/default-values";
 
 @Component({
   selector: 'app-card-form',
