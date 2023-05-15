@@ -15,6 +15,13 @@ export enum HolderActionTypes {
   clean = '[Holder] Clean store state',
   addFriend = '[Holder] Add Friend',
   friendAdded = '[Holder] Friend Added',
+
+  loadRequests = '[Holder] Load Requests',
+  requestsLoaded = '[Holder] Requests Loaded',
+  loadFamily = '[Holder] Load Family',
+  familyLoaded = '[Holder] Family Loaded',
+  loadSubscribers = '[Holder] Load Subscribers',
+  subscribersLoaded = '[Holder] Subscribers Loaded',
 }
 
 export const loadUser = createAction(HolderActionTypes.loadUser, props<{public_id: string}>());
@@ -34,5 +41,12 @@ export const cardUpdated = createAction(HolderActionTypes.cardUpdated, props<{ca
 
 export const addFriend = createAction(HolderActionTypes.addFriend, props<{request: FriendRequest}>());
 export const friendAdded = createAction(HolderActionTypes.friendAdded, props<{request: FriendRequest}>());
+
+export const loadRequests = createAction(HolderActionTypes.loadRequests, props<{uuid: string}>());
+export const requestsLoaded = createAction(HolderActionTypes.requestsLoaded, props<{requests: FriendRequest[]}>());
+export const loadFamily = createAction(HolderActionTypes.loadFamily, props<{uuid: string}>());
+export const familyLoaded = createAction(HolderActionTypes.familyLoaded, props<{family: FriendRequest[]}>());
+export const loadSubscribers = createAction(HolderActionTypes.loadSubscribers, props<{uuid: string}>());
+export const subscribersLoaded = createAction(HolderActionTypes.subscribersLoaded, props<{subscribers: FriendRequest[]}>());
 
 export const clean = createAction(HolderActionTypes.clean);

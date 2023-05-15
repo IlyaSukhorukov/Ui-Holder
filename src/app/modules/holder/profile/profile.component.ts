@@ -64,6 +64,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       from: CURRENT_USER_PUBLIC_ID,
       to: this.user_id || '',
       status: 'request',
+      timestamp: null,
     };
   }
 

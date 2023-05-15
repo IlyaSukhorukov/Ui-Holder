@@ -36,8 +36,7 @@ export class CardsListComponent implements OnInit, OnDestroy {
         this.favoriteCards = data.filter((card) => card.is_favorite);
         this.unfavoriteCards = data.filter((card) => !card.is_favorite);
       }
-      console.log('in list ' ,data);
-    })
+    });
   }
 
   onToggleChange($event: MatSlideToggleChange): void{

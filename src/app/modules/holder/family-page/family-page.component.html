@@ -2,13 +2,47 @@
 
   <mat-tab-group class="content">
     <mat-tab label="Заявки">
-      <p>family-page works!</p>
+      <mat-card class="list-card" *ngFor="let request of requests">
+        <mat-card-content fxLayout="row" fxLayoutAlign="space-between center">
+          <button mat-raised-button class="button" color="warn">Отклонить</button>
+          <span
+            class="list-fav-name"
+            matTooltip="Нажмите для просмотра профиля"
+            [routerLink]="['../profile/',request.from]"
+          >Заявка от пользователя id: {{request.from}}</span>
+          <button mat-raised-button class="button" color="primary">Принять</button>
+        </mat-card-content>
+      </mat-card>
     </mat-tab>
-    <mat-tab label="Подписчики">
-
+    <mat-tab label="Мои подписки">
+      <mat-card class="list-card" *ngFor="let sub of subscribers">
+        <mat-card-content fxLayout="row" fxLayoutAlign="space-between center">
+          <span
+            class="list-fav-name"
+            matTooltip="Нажмите для просмотра профиля"
+            [routerLink]="['../profile/',sub.from]"
+          >Подписка на пользователя id: {{sub.from}}</span>
+          <span
+            class="list-fav-name"
+          >от: {{sub.timestamp}}</span>
+          <button mat-stroked-button class="button">Отписаться</button>
+        </mat-card-content>
+      </mat-card>
     </mat-tab>
     <mat-tab label="Семейный доступ">
-
+      <mat-card class="list-card" *ngFor="let fm of family">
+        <mat-card-content fxLayout="row" fxLayoutAlign="space-between center">
+          <span
+            class="list-fav-name"
+            matTooltip="Нажмите для просмотра профиля"
+            [routerLink]="['../profile/',fm.from]"
+          >Пользователь id: {{fm.from}}</span>
+          <span
+            class="list-fav-name"
+          >В семейном доступе с: {{fm.timestamp}}</span>
+          <button mat-stroked-button class="button">Убрать из семейного доступа</button>
+        </mat-card-content>
+      </mat-card>
     </mat-tab>
   </mat-tab-group>
 </div>

@@ -6,10 +6,10 @@ import {
   addFriend,
   cardCreated,
   cardLoaded, cardUpdated,
-  createCard, friendAdded,
-  loadCard,
+  createCard, familyLoaded, friendAdded,
+  loadCard, loadFamily, loadRequests, loadSubscribers,
   loadUser,
-  loadUserCards, updateCard,
+  loadUserCards, requestsLoaded, subscribersLoaded, updateCard,
   UserCardsLoaded, userLoaded
 } from "./holder-store.actions";
 import {Card, FriendRequest, User} from "./schema";
@@ -108,6 +108,45 @@ const MUTATION_ADD_FRIEND = gql`
       to
       status
     }
+  }
+`
+
+const generateQueryLoadToByStatus = (id: string, status: string): string => `
+  query {
+      family(where: {to: {_eq: "${id}"}, status: {_eq: "${status}"}}) {
+        from
+        status
+        to
+        uuid
+        timestamp
+      }
+  }
+`
+
+const generateQueryLoadSubscribes = (id: string, status: string): string => `
+  query {
+      family(where: {from: {_eq: "${id}"}, status: {_eq: "${status}"}}) {
+        from
+        status
+        to
+        uuid
+        timestamp
+      }
+  }
+`
+
+const generateQueryLoadFamily = (id: string): string => `
+  query {
+      family(where: {_or: [
+        {from: {_eq: "${id}"}, status: {_eq: "family"}},
+        {to: {_eq: "${id}"}, status: {_eq: "family"}}
+      ]}) {
+        from
+        status
+        to
+        uuid
+        timestamp
+      }
   }
 `
 
@@ -221,4 +260,49 @@ export class HolderStoreEffects {
         );
       })
     ));
+
+  $loadRequests = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadRequests),
+      exhaustMap(({ uuid }) => {
+        const queryOptions: QueryOptions = {
+          query: gql`${generateQueryLoadToByStatus(uuid, 'request')}`,
+          fetchPolicy: 'no-cache',
+        }
+        return this._apollo.query<{request: FriendRequest}>(queryOptions).pipe(
+          // @ts-ignore
+          map(({data}) => requestsLoaded({requests: JSON.parse(JSON.stringify(data['family']))})),
+        );
+      })
+    ));
+
+  $loadSubscribers = createEffect(() =>
+  this.actions$.pipe(
+    ofType(loadSubscribers),
+    exhaustMap(({ uuid }) => {
+      const queryOptions: QueryOptions = {
+        query: gql`${generateQueryLoadSubscribes(uuid, 'subscriber')}`,
+        fetchPolicy: 'no-cache',
+      }
+      return this._apollo.query<{request: FriendRequest}>(queryOptions).pipe(
+        // @ts-ignore
+        map(({data}) => subscribersLoaded({subscribers: JSON.parse(JSON.stringify(data['family']))})),
+      );
+    })
+  ));
+
+  $loadFamily = createEffect(() =>
+  this.actions$.pipe(
+    ofType(loadFamily),
+    exhaustMap(({ uuid }) => {
+      const queryOptions: QueryOptions = {
+        query: gql`${generateQueryLoadFamily(uuid)}`,
+        fetchPolicy: 'no-cache',
+      }
+      return this._apollo.query<{request: FriendRequest}>(queryOptions).pipe(
+        // @ts-ignore
+        map(({data}) => familyLoaded({family: JSON.parse(JSON.stringify(data['family']))})),
+      );
+    })
+  ));
 }

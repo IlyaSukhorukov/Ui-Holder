@@ -19,4 +19,5 @@ export class FriendRequest {
   from: string = '';
   to: string = '';
   status: 'request' | 'family' | 'subscriber' = 'request';
+  timestamp: string | null = null;
 }
