@@ -15,14 +15,14 @@ import {
   loadFamily,
   loadPublicUserCards,
   loadRequests,
-  loadSubscribers,
+  loadSubscribers, loadSubsId,
   loadUser,
   loadUserCards,
   PublicUserCardsLoaded,
   relationDeleted,
   relationUpdated,
   requestsLoaded,
-  subscribersLoaded,
+  subscribersLoaded, subsIdLoaded,
   updateCard,
   updateRelation,
   UserCardsLoaded,
@@ -209,6 +209,19 @@ const generateMutationUpdateRelationStatus = (uuid: string, status: string): str
     }
   }
 }
+`
+
+const generateQueryLoadSubsId = (id: string): string => `
+  query {
+    family(where: {_or: [
+       {from: {_eq: "${id}"}, status: {_eq: "family"}},
+       {to: {_eq: "${id}"}, status: {_eq: "family"}},
+       {from: {_eq: "${id}"}, status: {_eq: "subscriber"}},
+     ]}) {
+      from
+      to
+    }
+  }
 `
 
 @Injectable()
@@ -427,7 +440,33 @@ export class HolderStoreEffects {
         // @ts-ignore
         map(({data}) => relationUpdated({uuid: JSON.parse(JSON.stringify(data['update_family']['returning'][0]))})),
         tap((e) => {
-          console.log('updated ',e);
+          // console.log('updated ',e);
+        }),
+      );
+    })
+  ));
+
+  $loadSubsId = createEffect(() =>
+  this.actions$.pipe(
+    ofType(loadSubsId),
+    exhaustMap(({ uuid }) => {
+      const queryOptions: QueryOptions = {
+        query: gql`${generateQueryLoadSubsId(uuid)}`,
+        fetchPolicy: 'no-cache',
+      }
+      return this._apollo.query<{family: Relations[]}>(queryOptions).pipe(
+        // @ts-ignore
+        map(({data}) => {
+          const result: string[] = [];
+          for (const person of data.family) {
+            if (!result.includes(person.from)){
+              result.push(person.from)
+            }
+            if (!result.includes(person.to)){
+              result.push(person.to)
+            }
+          }
+          return subsIdLoaded({subsId: result});
         }),
       );
     })

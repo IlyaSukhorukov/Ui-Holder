@@ -7,7 +7,7 @@ import {
   clean,
   familyLoaded, PublicUserCardsLoaded, relationDeleted,
   requestsLoaded,
-  subscribersLoaded,
+  subscribersLoaded, subsIdLoaded,
   UserCardsLoaded,
   userLoaded
 } from "./holder-store.actions";
@@ -18,6 +18,7 @@ export interface IHolderState {
   user: User | null;
   card: Card | null;
   cards: Card[];
+  subsId: string[];
 
   requests: Relations[];
   family: Relations[];
@@ -28,6 +29,7 @@ export const initialState: IHolderState = {
   user: null,
   card: null,
   cards: [],
+  subsId: [],
 
   requests: [],
   family: [],
@@ -80,6 +82,10 @@ export const cardsReducer = createReducer(
       subscribers: state.subscribers.filter((e) => e.uuid !== uuid),
     })
   }),
+  on(subsIdLoaded, (state, { subsId }) => ({
+    ...state,
+    subsId,
+  })),
 );
 
 export const metaReducers: MetaReducer<IHolderState>[] = [];

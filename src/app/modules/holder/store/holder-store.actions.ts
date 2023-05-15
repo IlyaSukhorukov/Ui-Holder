@@ -1,5 +1,6 @@
 import {createAction, props} from "@ngrx/store";
 import {Card, Relations, User} from "./schema";
+import {selectSubsId} from "./holder-store.selectors";
 
 export enum HolderActionTypes {
   loadUser = '[Holder] Load User',
@@ -30,6 +31,8 @@ export enum HolderActionTypes {
   relationDeleted = '[Holder] Relation Deleted',
   updateRelation = '[Holder] Update Relation',
   relationUpdated = '[Holder] Relation Updated',
+  loadSubsId = '[Holder] Load SubsId',
+  subsIdLoaded = '[Holder] SubsId Loaded',
 }
 
 export const loadUser = createAction(HolderActionTypes.loadUser, props<{public_id: string}>());
@@ -68,5 +71,8 @@ export const relationDeleted = createAction(HolderActionTypes.relationDeleted, p
 
 export const updateRelation = createAction(HolderActionTypes.updateRelation, props<{uuid: string, status: string}>());
 export const relationUpdated = createAction(HolderActionTypes.relationUpdated, props<{relation: Relations}>());
+
+export const loadSubsId = createAction(HolderActionTypes.loadSubsId, props<{uuid: string}>());
+export const subsIdLoaded = createAction(HolderActionTypes.subsIdLoaded, props<{subsId: string[]}>());
 
 export const clean = createAction(HolderActionTypes.clean);

@@ -1,8 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Store} from "@ngrx/store";
-import {loadUserCards} from "../store/holder-store.actions";
+import {loadSubsId, loadUserCards} from "../store/holder-store.actions";
 import {Card} from "../store/schema";
-import {selectCardsList} from "../store/holder-store.selectors";
+import {selectCardsList, selectSubsId} from "../store/holder-store.selectors";
 import {Subject, takeUntil} from "rxjs";
 import {isEmpty, isNil} from "lodash";
 import {MatSlideToggleChange} from "@angular/material/slide-toggle";
@@ -21,18 +21,30 @@ export class CardsListComponent implements OnInit, OnDestroy {
   public isListView = false;
   public cards: Card[] = [];
 
+  public subsId: string[] = [];
+
   constructor(private _store: Store, public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
     this.subscribeOnCardsList();
-    this._store.dispatch(loadUserCards({id: CURRENT_USER_PUBLIC_ID}));
+    this.subscribeOnSubsId();
+    this._store.dispatch(loadUserCards({ id: CURRENT_USER_PUBLIC_ID }));
+    this._store.dispatch(loadSubsId({ uuid: CURRENT_USER_PUBLIC_ID }));
   }
 
   subscribeOnCardsList(): void {
     this._store.select(selectCardsList).pipe(takeUntil(this._unsubscribe$)).subscribe((data) => {
       if (!isEmpty(data)) {
         this.cards = data;
+      }
+    });
+  }
+
+  subscribeOnSubsId(): void {
+    this._store.select(selectSubsId).pipe(takeUntil(this._unsubscribe$)).subscribe((data) => {
+      if (!isEmpty(data)) {
+        this.subsId = data;
       }
     });
   }
