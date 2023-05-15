@@ -22,6 +22,10 @@ export enum HolderActionTypes {
   familyLoaded = '[Holder] Family Loaded',
   loadSubscribers = '[Holder] Load Subscribers',
   subscribersLoaded = '[Holder] Subscribers Loaded',
+  deleteRelation = '[Holder] Delete Relation',
+  relationDeleted = '[Holder] Relation Deleted',
+  updateRelation = '[Holder] Update Relation',
+  relationUpdated = '[Holder] Relation Updated',
 }
 
 export const loadUser = createAction(HolderActionTypes.loadUser, props<{public_id: string}>());
@@ -48,5 +52,11 @@ export const loadFamily = createAction(HolderActionTypes.loadFamily, props<{uuid
 export const familyLoaded = createAction(HolderActionTypes.familyLoaded, props<{family: FriendRequest[]}>());
 export const loadSubscribers = createAction(HolderActionTypes.loadSubscribers, props<{uuid: string}>());
 export const subscribersLoaded = createAction(HolderActionTypes.subscribersLoaded, props<{subscribers: FriendRequest[]}>());
+
+export const deleteRelation = createAction(HolderActionTypes.deleteRelation, props<{uuid: string}>());
+export const relationDeleted = createAction(HolderActionTypes.relationDeleted, props<{uuid: string}>());
+
+export const updateRelation = createAction(HolderActionTypes.updateRelation, props<{uuid: string, status: string}>());
+export const relationUpdated = createAction(HolderActionTypes.relationUpdated, props<{relation: FriendRequest}>());
 
 export const clean = createAction(HolderActionTypes.clean);

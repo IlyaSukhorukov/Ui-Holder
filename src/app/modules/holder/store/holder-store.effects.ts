@@ -6,10 +6,10 @@ import {
   addFriend,
   cardCreated,
   cardLoaded, cardUpdated,
-  createCard, familyLoaded, friendAdded,
+  createCard, deleteRelation, familyLoaded, friendAdded,
   loadCard, loadFamily, loadRequests, loadSubscribers,
   loadUser,
-  loadUserCards, requestsLoaded, subscribersLoaded, updateCard,
+  loadUserCards, relationDeleted, relationUpdated, requestsLoaded, subscribersLoaded, updateCard, updateRelation,
   UserCardsLoaded, userLoaded
 } from "./holder-store.actions";
 import {Card, FriendRequest, User} from "./schema";
@@ -148,6 +148,28 @@ const generateQueryLoadFamily = (id: string): string => `
         timestamp
       }
   }
+`
+
+const generateMutationDeleteRelation = (uuid: string): string => `
+  mutation {
+      delete_family_by_pk(uuid: "${uuid}") {
+        uuid
+      }
+  }
+`
+
+const generateMutationUpdateRelationStatus = (uuid: string, status: string): string => `
+  mutation {
+  update_family(where: {uuid: {_eq: "${uuid}"}},
+    _set: {status: "${status}"}) {
+    returning {
+      from
+      status
+      to
+      uuid
+    }
+  }
+}
 `
 
 @Injectable()
@@ -302,6 +324,42 @@ export class HolderStoreEffects {
       return this._apollo.query<{request: FriendRequest}>(queryOptions).pipe(
         // @ts-ignore
         map(({data}) => familyLoaded({family: JSON.parse(JSON.stringify(data['family']))})),
+      );
+    })
+  ));
+
+  $deleteRelation = createEffect(() =>
+  this.actions$.pipe(
+    ofType(deleteRelation),
+    exhaustMap(({ uuid }) => {
+      const mutationOptions: MutationOptions = {
+        mutation: gql`${generateMutationDeleteRelation(uuid)}`,
+        fetchPolicy: 'no-cache',
+      }
+      return this._apollo.mutate<{request: FriendRequest}>(mutationOptions).pipe(
+        // @ts-ignore
+        map(({data}) => relationDeleted({uuid: JSON.parse(JSON.stringify(data['delete_family_by_pk'].uuid))})),
+        tap((e) => {
+          console.log('updated ',e);
+        }),
+      );
+    })
+  ));
+
+  $updateRelation = createEffect(() =>
+  this.actions$.pipe(
+    ofType(updateRelation),
+      exhaustMap(({ uuid, status }) => {
+      const mutationOptions: MutationOptions = {
+        mutation: gql`${generateMutationUpdateRelationStatus(uuid, status)}`,
+        fetchPolicy: 'no-cache',
+      }
+      return this._apollo.mutate<{request: FriendRequest}>(mutationOptions).pipe(
+        // @ts-ignore
+        map(({data}) => relationUpdated({uuid: JSON.parse(JSON.stringify(data['update_family']['returning'][0]))})),
+        tap((e) => {
+          console.log('updated ',e);
+        }),
       );
     })
   ));

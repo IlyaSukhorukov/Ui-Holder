@@ -4,13 +4,13 @@
     <mat-tab label="Заявки">
       <mat-card class="list-card" *ngFor="let request of requests">
         <mat-card-content fxLayout="row" fxLayoutAlign="space-between center">
-          <button mat-raised-button class="button" color="warn">Отклонить</button>
+          <button mat-raised-button class="button" color="warn" (click)="onDelete(request.uuid)">Отклонить</button>
           <span
             class="list-fav-name"
             matTooltip="Нажмите для просмотра профиля"
             [routerLink]="['../profile/',request.from]"
           >Заявка от пользователя id: {{request.from}}</span>
-          <button mat-raised-button class="button" color="primary">Принять</button>
+          <button mat-raised-button class="button" color="primary" (click)="onChangeStatus(request.uuid)">Принять</button>
         </mat-card-content>
       </mat-card>
     </mat-tab>
@@ -25,7 +25,7 @@
           <span
             class="list-fav-name"
           >от: {{sub.timestamp}}</span>
-          <button mat-stroked-button class="button">Отписаться</button>
+          <button mat-stroked-button class="button" (click)="onDelete(sub.uuid)">Отписаться</button>
         </mat-card-content>
       </mat-card>
     </mat-tab>
@@ -40,7 +40,7 @@
           <span
             class="list-fav-name"
           >В семейном доступе с: {{fm.timestamp}}</span>
-          <button mat-stroked-button class="button">Убрать из семейного доступа</button>
+          <button mat-stroked-button class="button" (click)="onDelete(fm.uuid)">Убрать из семейного доступа</button>
         </mat-card-content>
       </mat-card>
     </mat-tab>

@@ -3,7 +3,7 @@ import {createReducer, MetaReducer, on} from "@ngrx/store";
 import {
   cardLoaded,
   clean,
-  familyLoaded,
+  familyLoaded, relationDeleted,
   requestsLoaded,
   subscribersLoaded,
   UserCardsLoaded,
@@ -59,6 +59,13 @@ export const cardsReducer = createReducer(
     ...state,
     subscribers,
   })),
+  on(relationDeleted, (state, { uuid }) => {
+    console.log('in store ',uuid)
+    return ({
+      ...state,
+      subscribers: state.subscribers.filter((e) => e.uuid !== uuid),
+    })
+  }),
 );
 
 export const metaReducers: MetaReducer<IHolderState>[] = [];
