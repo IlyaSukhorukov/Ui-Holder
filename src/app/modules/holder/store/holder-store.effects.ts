@@ -314,7 +314,7 @@ export class HolderStoreEffects {
     this.actions$.pipe(
       ofType(addFriend),
       exhaustMap(({ request }) => {
-        const rq = omit(request, ['uuid']);
+        const rq = omit(request, ['uuid','timestamp']);
         const mutationOptions: MutationOptions = {
           mutation: MUTATION_ADD_FRIEND,
           variables: {

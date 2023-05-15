@@ -69,12 +69,12 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
 
-  private createRequest(): Relations {
+  private createRequest(status: 'request' | 'family' | 'subscriber'): Relations {
     return {
       uuid: null,
       from: CURRENT_USER_PUBLIC_ID,
       to: this.user_id || '',
-      status: 'request',
+      status: status,
       timestamp: null,
     };
   }
@@ -84,10 +84,21 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   public onAddFriend(): void {
-    this._store.dispatch(addFriend({request: this.createRequest()}));
+    this._store.dispatch(addFriend({request: this.createRequest('request')}));
 
     this._snackBar.open(
       "Запрос на добавление в друзья отправлен",
+      "Закрыть",
+      {
+        duration: 3000
+      });
+  }
+
+  public onSubscribe(): void {
+    this._store.dispatch(addFriend({request: this.createRequest('subscriber')}));
+
+    this._snackBar.open(
+      "Вы подписались на пользователя",
       "Закрыть",
       {
         duration: 3000
