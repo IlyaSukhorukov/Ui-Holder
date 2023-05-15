@@ -29,6 +29,7 @@ import { FamilyPageComponent } from './family-page/family-page.component';
 import {MatTabsModule} from "@angular/material/tabs";
 import { SearchComponent } from './search/search.component';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 @NgModule({
   declarations: [
@@ -43,28 +44,29 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
   exports: [
     CardsListComponent
   ],
-    imports: [
-        CommonModule,
-        StoreModule.forFeature(stateFeatureKey, cardsReducer, {metaReducers}),
-        EffectsModule.forFeature([HolderStoreEffects]),
-        MatCardModule,
-        MatButtonToggleModule,
-        MatSlideToggleModule,
-        FlexLayoutModule,
-        MatGridListModule,
-        MatButtonModule,
-        MatIconModule,
-        RouterModule,
-        MatDialogModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatSelectModule,
-        NgxBarcodeModule,
-        NgxQRCodeModule,
-        ReactiveFormsModule,
-        ZXingScannerModule,
-        MatTabsModule,
-        MatSnackBarModule,
-    ]
+  imports: [
+    CommonModule,
+    StoreModule.forFeature(stateFeatureKey, cardsReducer, {metaReducers}),
+    EffectsModule.forFeature([HolderStoreEffects]),
+    MatCardModule,
+    MatButtonToggleModule,
+    MatSlideToggleModule,
+    FlexLayoutModule,
+    MatGridListModule,
+    MatButtonModule,
+    MatIconModule,
+    RouterModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    NgxBarcodeModule,
+    NgxQRCodeModule,
+    ReactiveFormsModule,
+    ZXingScannerModule,
+    MatTabsModule,
+    MatSnackBarModule,
+    MatTooltipModule,
+  ]
 })
 export class HolderModule { }

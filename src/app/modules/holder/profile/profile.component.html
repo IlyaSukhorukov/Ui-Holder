@@ -17,8 +17,11 @@
     <mat-card-title class="card-info-title" fxLayout="row">
       <h1>{{ currentUser?.public_name || 'Данный пользователь скрыл личную информацию' }}</h1>
       <div class="main-spacer"></div>
-      <button *ngIf="!isMyProfile()" mat-icon-button class="add-friend-button" (click)="onAddFriend()">
-        <mat-icon aria-hidden="false" aria-label="Иконка профиля">person_add</mat-icon>
+      <button *ngIf="!isMyProfile()" mat-icon-button matTooltip="Подписаться">
+        <mat-icon aria-hidden="false" aria-label="Иконка подписки">person_add</mat-icon>
+      </button>
+      <button *ngIf="!isMyProfile()" mat-icon-button class="add-friend-button" (click)="onAddFriend()" matTooltip="Запросить семейный доступ">
+        <mat-icon aria-hidden="false" aria-label="Иконка профиля">diversity_1</mat-icon>
       </button>
     </mat-card-title>
     <mat-card-subtitle class="card-info-subtitle">
