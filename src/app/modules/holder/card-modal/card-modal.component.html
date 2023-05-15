@@ -11,7 +11,7 @@
   <button mat-icon-button [routerLink]="['./edit/',data.uuid]" (click)="onClose()">
     <mat-icon aria-hidden="false" aria-label="Редактировать">edit</mat-icon>
   </button>
-  <button mat-icon-button [routerLink]="['./new']">
+  <button mat-icon-button (click)="onDelete()">
     <mat-icon aria-hidden="false" aria-label="Удалить">delete</mat-icon>
   </button>
   <span class="main-spacer"></span>

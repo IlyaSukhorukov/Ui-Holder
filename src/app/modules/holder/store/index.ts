@@ -1,6 +1,8 @@
 import {Card, Relations, User} from "./schema";
 import {createReducer, MetaReducer, on} from "@ngrx/store";
 import {
+  cardCreated,
+  cardDeleted,
   cardLoaded,
   clean,
   familyLoaded, PublicUserCardsLoaded, relationDeleted,
@@ -42,6 +44,14 @@ export const cardsReducer = createReducer(
   on(cardLoaded, (state, { card }) => ({
     ...state,
     card
+  })),
+  on(cardCreated, (state, { card }) => ({
+    ...state,
+    cards: [...state.cards, card]
+  })),
+  on(cardDeleted, (state, { uuid }) => ({
+    ...state,
+    cards: state.cards.filter((e)=> e.id !== uuid)
   })),
   on(UserCardsLoaded, (state, { list }) => ({
     ...state,

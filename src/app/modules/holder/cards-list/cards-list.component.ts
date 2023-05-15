@@ -19,8 +19,7 @@ export class CardsListComponent implements OnInit, OnDestroy {
   private _unsubscribe$ = new Subject<void>();
 
   public isListView = false;
-  public favoriteCards: Card[] = [];
-  public unfavoriteCards: Card[] = [];
+  public cards: Card[] = [];
 
   constructor(private _store: Store, public dialog: MatDialog) {
   }
@@ -33,8 +32,7 @@ export class CardsListComponent implements OnInit, OnDestroy {
   subscribeOnCardsList(): void {
     this._store.select(selectCardsList).pipe(takeUntil(this._unsubscribe$)).subscribe((data) => {
       if (!isEmpty(data)) {
-        this.favoriteCards = data.filter((card) => card.is_favorite);
-        this.unfavoriteCards = data.filter((card) => !card.is_favorite);
+        this.cards = data;
       }
     });
   }

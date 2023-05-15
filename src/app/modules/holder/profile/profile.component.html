@@ -36,7 +36,7 @@
   </div>
 <mat-grid-list class="grid" cols="4" rowHeight="12em">
   <mat-grid-tile class="grid-tile" *ngFor="let card of cards">
-    <mat-card class="grid-card" >
+    <mat-card class="grid-card" (click)="onCardClick(card.id, card.name, card.code, card.description, card.type)">
       <mat-card-header>
         <mat-card-title>{{card.name}}</mat-card-title>
       </mat-card-header>

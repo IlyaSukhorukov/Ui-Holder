@@ -6,6 +6,8 @@ export enum HolderActionTypes {
   userLoaded = '[Holder] User Loaded',
   loadCard = '[Holder] Load Card',
   cardLoaded = '[Holder] Card Loaded',
+  deleteCard = '[Holder] Delete Card',
+  cardDeleted = '[Holder] Card Deleted',
   loadUserCards = '[Holder] Load Cards',
   userCardsLoaded = '[Holder] Cards Loaded',
   loadPublicUserCards = '[Holder] Load Public Cards',
@@ -35,6 +37,9 @@ export const userLoaded = createAction(HolderActionTypes.userLoaded, props<{user
 
 export const loadCard = createAction(HolderActionTypes.loadCard, props<{uuid: string}>());
 export const cardLoaded = createAction(HolderActionTypes.cardLoaded, props<{card: Card}>());
+
+export const deleteCard = createAction(HolderActionTypes.deleteCard, props<{uuid: string}>());
+export const cardDeleted = createAction(HolderActionTypes.cardDeleted, props<{uuid: string}>());
 
 export const loadUserCards = createAction(HolderActionTypes.loadUserCards, props<{id: string}>());
 export const UserCardsLoaded = createAction(HolderActionTypes.userCardsLoaded, props<{list: Card[]}>());

@@ -4,10 +4,10 @@ import { exhaustMap, map, tap } from 'rxjs/operators';
 import {Apollo, gql} from "apollo-angular";
 import {
   addFriend,
-  cardCreated,
+  cardCreated, cardDeleted,
   cardLoaded,
   cardUpdated,
-  createCard,
+  createCard, deleteCard,
   deleteRelation,
   familyLoaded,
   friendAdded,
@@ -54,6 +54,14 @@ const generateQueryLoadCard = (uuid: string): string => `
     description
   }
 }
+`
+
+const generateMutationDeleteCard = (uuid: string): string => `
+  mutation MyMutation {
+    delete_cards_by_pk(id: "${uuid}") {
+      id
+    }
+  }
 `
 
 const generateQueryLoadUserCards = (id: string): string => `
@@ -237,6 +245,21 @@ export class HolderStoreEffects {
       })
     ));
 
+  $deleteCard = createEffect(() =>
+  this.actions$.pipe(
+    ofType(deleteCard),
+    exhaustMap(({ uuid }) => {
+      const qo: MutationOptions = {
+        mutation: gql`${generateMutationDeleteCard(uuid)}`,
+        fetchPolicy: 'no-cache',
+      }
+      return this._apollo.mutate<{ card: Card }>(qo).pipe(
+        // @ts-ignore
+        map(({data}) => cardDeleted({card: data.delete_cards_by_pk.id}))
+      );
+    })
+  ));
+
   $getUserCards = createEffect(() =>
     this.actions$.pipe(
       ofType(loadUserCards),
@@ -280,9 +303,9 @@ export class HolderStoreEffects {
         }
         return this._apollo.query<{card: Card}>(qo).pipe(
           // @ts-ignore
-          map(({data}) => cardCreated({card: JSON.parse(JSON.stringify(data['cards']))})),
+          map(({data}) => cardCreated({card: JSON.parse(JSON.stringify(data['insert_cards_one']))})),
           tap((e) => {
-            // console.log(e) debug
+            console.log(e)
           }),
         );
       })

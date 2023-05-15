@@ -39,7 +39,6 @@ export class CardFormComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscribeOnCard();
     this.subscribeOnParam();
-    this.subscribeOnParamChange(); // TODO check не работает
   }
 
   subscribeOnParam(): void {
@@ -58,12 +57,6 @@ export class CardFormComponent implements OnInit, OnDestroy {
         this.formGroup.patchValue(card);
       }
     })
-  }
-
-  subscribeOnParamChange(): void {
-    this.formGroup.valueChanges.pipe(takeUntil(this._unsubscribe$)).subscribe(($event) => {
-      // this.formGroup.markAllAsTouched();
-    });
   }
 
   onCreate(): void {

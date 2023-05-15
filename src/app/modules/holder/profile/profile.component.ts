@@ -9,6 +9,8 @@ import {Card, Relations, User} from "../store/schema";
 import {addFriend, clean, loadPublicUserCards, loadUser, loadUserCards} from "../store/holder-store.actions";
 import {CURRENT_USER_PUBLIC_ID} from "../../../core/default-values";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {CardModalComponent} from "../card-modal/card-modal.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-profile',
@@ -28,7 +30,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     private _route: ActivatedRoute,
     private _store: Store,
     private _fb: FormBuilder,
-    private _snackBar: MatSnackBar) {
+    private _snackBar: MatSnackBar,
+    public dialog: MatDialog) {
     /*this.formGroup = this._fb.group({...new Card});
     this._setFormGroup();*/
   }
@@ -103,6 +106,25 @@ export class ProfileComponent implements OnInit, OnDestroy {
       {
         duration: 3000
       });
+  }
+
+  onCardClick(uuid: string, name: string, code: string, description: string, type: string): void {
+    const dialogRef = this.dialog.open(CardModalComponent, {
+      width: '50em',
+      maxWidth: '69em',
+      maxHeight: '50em',
+      data: {
+        uuid,
+        name,
+        code,
+        description,
+        type
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(result);
+    });
   }
 
   ngOnDestroy(): void {
