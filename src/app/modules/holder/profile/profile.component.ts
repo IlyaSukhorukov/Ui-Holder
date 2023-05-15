@@ -5,7 +5,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {Store} from "@ngrx/store";
 import {FormBuilder} from "@angular/forms";
 import {selectUser} from "../store/holder-store.selectors";
-import {Card, FriendRequest, User} from "../store/schema";
+import {Card, Relations, User} from "../store/schema";
 import {addFriend, loadUser} from "../store/holder-store.actions";
 import {CURRENT_USER_PUBLIC_ID} from "../../../core/default-values";
 import {MatSnackBar} from "@angular/material/snack-bar";
@@ -42,7 +42,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this._store.select(selectUser).pipe(takeUntil(this._unsubscribe$)).subscribe((user) => {
       if (!isNil(user)) {
         this.currentUser = user;
-        console.log(this.currentUser);
       }
     });
   }
@@ -51,14 +50,13 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this._route.paramMap.pipe(takeUntil(this._unsubscribe$)).subscribe((params) => {
       this.user_id = params.get('id');
       if (!isNil(this.user_id)) {
-        console.log(this.user_id);
         this._store.dispatch(loadUser({public_id: this.user_id}));
         // this._store.dispatch(loadCard({uuid: this.user_id}));
       }
     });
   }
 
-  private createRequest(): FriendRequest {
+  private createRequest(): Relations {
     return {
       uuid: null,
       from: CURRENT_USER_PUBLIC_ID,

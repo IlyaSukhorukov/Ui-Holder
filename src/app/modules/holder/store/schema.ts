@@ -14,7 +14,7 @@ export class User {
   public_name: string = '';
 }
 
-export class FriendRequest {
+export class Relations {
   uuid: string | null = '';
   from: string = '';
   to: string = '';

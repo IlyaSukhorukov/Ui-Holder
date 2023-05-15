@@ -1,4 +1,4 @@
-import {Card, FriendRequest, User} from "./schema";
+import {Card, Relations, User} from "./schema";
 import {createReducer, MetaReducer, on} from "@ngrx/store";
 import {
   cardLoaded,
@@ -17,9 +17,9 @@ export interface IHolderState {
   card: Card | null;
   cards: Card[];
 
-  requests: FriendRequest[];
-  family: FriendRequest[];
-  subscribers: FriendRequest[];
+  requests: Relations[];
+  family: Relations[];
+  subscribers: Relations[];
 }
 
 export const initialState: IHolderState = {

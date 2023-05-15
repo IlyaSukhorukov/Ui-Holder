@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
-import {FriendRequest} from "../store/schema";
+import {Relations} from "../store/schema";
 import {Subject, takeUntil} from "rxjs";
 import {Store} from "@ngrx/store";
 import { selectFamily, selectRequests, selectSubscribers } from "../store/holder-store.selectors";
@@ -16,9 +16,9 @@ import {CURRENT_USER_PUBLIC_ID} from "../../../core/default-values";
 export class FamilyPageComponent implements OnInit, OnDestroy {
   private _unsubscribe$ = new Subject<void>();
 
-  public requests: FriendRequest[] = [];
-  public family: FriendRequest[] = [];
-  public subscribers: FriendRequest[] = [];
+  public requests: Relations[] = [];
+  public family: Relations[] = [];
+  public subscribers: Relations[] = [];
 
   constructor(private _store: Store, private _cd: ChangeDetectorRef) {
   }

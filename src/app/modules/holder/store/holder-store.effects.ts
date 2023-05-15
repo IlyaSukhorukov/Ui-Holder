@@ -12,7 +12,7 @@ import {
   loadUserCards, relationDeleted, relationUpdated, requestsLoaded, subscribersLoaded, updateCard, updateRelation,
   UserCardsLoaded, userLoaded
 } from "./holder-store.actions";
-import {Card, FriendRequest, User} from "./schema";
+import {Card, Relations, User} from "./schema";
 import {MutationOptions, QueryOptions} from "@apollo/client/core";
 import {omit} from "lodash";
 
@@ -276,7 +276,7 @@ export class HolderStoreEffects {
           },
           fetchPolicy: 'no-cache',
         }
-        return this._apollo.mutate<{request: FriendRequest}>(mutationOptions).pipe(
+        return this._apollo.mutate<{request: Relations}>(mutationOptions).pipe(
           // @ts-ignore
           map(({data}) => friendAdded({request: JSON.parse(JSON.stringify(data['insert_family_one']))})),
         );
@@ -291,7 +291,7 @@ export class HolderStoreEffects {
           query: gql`${generateQueryLoadToByStatus(uuid, 'request')}`,
           fetchPolicy: 'no-cache',
         }
-        return this._apollo.query<{request: FriendRequest}>(queryOptions).pipe(
+        return this._apollo.query<{request: Relations}>(queryOptions).pipe(
           // @ts-ignore
           map(({data}) => requestsLoaded({requests: JSON.parse(JSON.stringify(data['family']))})),
         );
@@ -306,7 +306,7 @@ export class HolderStoreEffects {
         query: gql`${generateQueryLoadSubscribes(uuid, 'subscriber')}`,
         fetchPolicy: 'no-cache',
       }
-      return this._apollo.query<{request: FriendRequest}>(queryOptions).pipe(
+      return this._apollo.query<{request: Relations}>(queryOptions).pipe(
         // @ts-ignore
         map(({data}) => subscribersLoaded({subscribers: JSON.parse(JSON.stringify(data['family']))})),
       );
@@ -321,7 +321,7 @@ export class HolderStoreEffects {
         query: gql`${generateQueryLoadFamily(uuid)}`,
         fetchPolicy: 'no-cache',
       }
-      return this._apollo.query<{request: FriendRequest}>(queryOptions).pipe(
+      return this._apollo.query<{request: Relations}>(queryOptions).pipe(
         // @ts-ignore
         map(({data}) => familyLoaded({family: JSON.parse(JSON.stringify(data['family']))})),
       );
@@ -336,7 +336,7 @@ export class HolderStoreEffects {
         mutation: gql`${generateMutationDeleteRelation(uuid)}`,
         fetchPolicy: 'no-cache',
       }
-      return this._apollo.mutate<{request: FriendRequest}>(mutationOptions).pipe(
+      return this._apollo.mutate<{request: Relations}>(mutationOptions).pipe(
         // @ts-ignore
         map(({data}) => relationDeleted({uuid: JSON.parse(JSON.stringify(data['delete_family_by_pk'].uuid))})),
         tap((e) => {
@@ -354,7 +354,7 @@ export class HolderStoreEffects {
         mutation: gql`${generateMutationUpdateRelationStatus(uuid, status)}`,
         fetchPolicy: 'no-cache',
       }
-      return this._apollo.mutate<{request: FriendRequest}>(mutationOptions).pipe(
+      return this._apollo.mutate<{request: Relations}>(mutationOptions).pipe(
         // @ts-ignore
         map(({data}) => relationUpdated({uuid: JSON.parse(JSON.stringify(data['update_family']['returning'][0]))})),
         tap((e) => {
