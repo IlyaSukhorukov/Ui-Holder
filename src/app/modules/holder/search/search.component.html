@@ -1,8 +1,15 @@
 <div class="main" fxLayout="row" fxLayoutAlign="center start">
   <mat-card class="card-search">
     <mat-form-field class="form-filed" appearance="outline">
-      <mat-label><mat-icon aria-hidden="false" aria-label="поиск">search</mat-icon>Поиск</mat-label>
-      <input matInput formControlName="search">
+      <mat-label>Поиск пользователя по id</mat-label>
+      <input matInput #inputField>
+      <button matSuffix
+              mat-button
+              aria-label="Clear"
+              style="margin-right: 0.5em"
+              [routerLink]="['../profile/',inputField.value]"
+      ><mat-icon aria-hidden="false" aria-label="поиск">search</mat-icon>Найти
+      </button>
     </mat-form-field>
   </mat-card>
 </div>
