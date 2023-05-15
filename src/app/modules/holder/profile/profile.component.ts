@@ -1,12 +1,12 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subject, takeUntil} from "rxjs";
-import {isNil} from "lodash";
+import {isEmpty, isNil} from "lodash";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Store} from "@ngrx/store";
 import {FormBuilder} from "@angular/forms";
-import {selectUser} from "../store/holder-store.selectors";
+import {selectCardsList, selectUser} from "../store/holder-store.selectors";
 import {Card, Relations, User} from "../store/schema";
-import {addFriend, loadUser} from "../store/holder-store.actions";
+import {addFriend, clean, loadPublicUserCards, loadUser, loadUserCards} from "../store/holder-store.actions";
 import {CURRENT_USER_PUBLIC_ID} from "../../../core/default-values";
 import {MatSnackBar} from "@angular/material/snack-bar";
 
@@ -21,7 +21,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   public currentUser: User | null = null;
   public user_id: string | null = null;
-  public unfavoriteCards: Card[] = [];
+  public cards: Card[] = [];
 
   constructor(
     private _router: Router,
@@ -34,8 +34,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this._store.dispatch(clean());
     this.subscribeOnProfile();
     this.subscribeOnParam();
+    this.subscribeOnPublicCards();
   }
 
   subscribeOnProfile(): void {
@@ -51,10 +53,21 @@ export class ProfileComponent implements OnInit, OnDestroy {
       this.user_id = params.get('id');
       if (!isNil(this.user_id)) {
         this._store.dispatch(loadUser({public_id: this.user_id}));
+        this._store.dispatch(loadPublicUserCards({id: this.user_id}));
         // this._store.dispatch(loadCard({uuid: this.user_id}));
       }
     });
   }
+
+  subscribeOnPublicCards(): void {
+    this._store.select(selectCardsList).pipe(takeUntil(this._unsubscribe$)).subscribe((cards) => {
+      console.log(cards)
+      if (!isEmpty(cards)) {
+        this.cards = cards;
+      }
+    });
+  }
+
 
   private createRequest(): Relations {
     return {

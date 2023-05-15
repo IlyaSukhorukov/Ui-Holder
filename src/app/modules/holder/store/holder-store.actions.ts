@@ -8,6 +8,8 @@ export enum HolderActionTypes {
   cardLoaded = '[Holder] Card Loaded',
   loadUserCards = '[Holder] Load Cards',
   userCardsLoaded = '[Holder] Cards Loaded',
+  loadPublicUserCards = '[Holder] Load Public Cards',
+  publicUserCardsLoaded = '[Holder] Public Cards Loaded',
   createCard = '[Holder] Create Card',
   cardCreated = '[Holder] Card Created',
   updateCard = '[Holder] Update Card',
@@ -36,6 +38,9 @@ export const cardLoaded = createAction(HolderActionTypes.cardLoaded, props<{card
 
 export const loadUserCards = createAction(HolderActionTypes.loadUserCards, props<{id: string}>());
 export const UserCardsLoaded = createAction(HolderActionTypes.userCardsLoaded, props<{list: Card[]}>());
+
+export const loadPublicUserCards = createAction(HolderActionTypes.loadPublicUserCards, props<{id: string}>());
+export const PublicUserCardsLoaded = createAction(HolderActionTypes.publicUserCardsLoaded, props<{list: Card[]}>());
 
 export const createCard = createAction(HolderActionTypes.createCard, props<{card: Card}>());
 export const cardCreated = createAction(HolderActionTypes.cardCreated, props<{card: Card}>());

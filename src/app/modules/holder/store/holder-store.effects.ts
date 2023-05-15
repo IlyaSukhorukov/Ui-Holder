@@ -5,12 +5,28 @@ import {Apollo, gql} from "apollo-angular";
 import {
   addFriend,
   cardCreated,
-  cardLoaded, cardUpdated,
-  createCard, deleteRelation, familyLoaded, friendAdded,
-  loadCard, loadFamily, loadRequests, loadSubscribers,
+  cardLoaded,
+  cardUpdated,
+  createCard,
+  deleteRelation,
+  familyLoaded,
+  friendAdded,
+  loadCard,
+  loadFamily,
+  loadPublicUserCards,
+  loadRequests,
+  loadSubscribers,
   loadUser,
-  loadUserCards, relationDeleted, relationUpdated, requestsLoaded, subscribersLoaded, updateCard, updateRelation,
-  UserCardsLoaded, userLoaded
+  loadUserCards,
+  PublicUserCardsLoaded,
+  relationDeleted,
+  relationUpdated,
+  requestsLoaded,
+  subscribersLoaded,
+  updateCard,
+  updateRelation,
+  UserCardsLoaded,
+  userLoaded
 } from "./holder-store.actions";
 import {Card, Relations, User} from "./schema";
 import {MutationOptions, QueryOptions} from "@apollo/client/core";
@@ -43,6 +59,21 @@ const generateQueryLoadCard = (uuid: string): string => `
 const generateQueryLoadUserCards = (id: string): string => `
   query {
       cards(where: {id_user: {_eq: "${id}"}}) {
+        code
+        id
+        id_user
+        is_favorite
+        name
+        stat_opened
+        type
+        description
+      }
+  }
+`
+
+const generateQueryLoadPublicUserCards = (id: string): string => `
+  query {
+      cards(where: {id_user: {_eq: "${id}"}, access: {_eq: "public"}}) {
         code
         id
         id_user
@@ -220,6 +251,21 @@ export class HolderStoreEffects {
         );
       })
     ));
+
+  $getPublicUserCards = createEffect(() =>
+  this.actions$.pipe(
+    ofType(loadPublicUserCards),
+    exhaustMap(({ id }) => {
+      const qo: QueryOptions = {
+        query: gql`${generateQueryLoadPublicUserCards(id)}`,
+        fetchPolicy: 'no-cache',
+      }
+      return this._apollo.query<{list: Card[]}>(qo).pipe(
+        // @ts-ignore
+        map(({data}) => PublicUserCardsLoaded({list: JSON.parse(JSON.stringify(data['cards']))})),
+      );
+    })
+  ));
 
   $createCard = createEffect(() =>
     this.actions$.pipe(

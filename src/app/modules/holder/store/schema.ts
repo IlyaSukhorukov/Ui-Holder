@@ -5,7 +5,7 @@ export class Card {
   stat_opened: number = 0;
   is_favorite: boolean = false;
   type: string = '';
-  access: string = '';
+  access: 'public' | 'family' | 'private' = 'private';
   description: string = '';
 }
 

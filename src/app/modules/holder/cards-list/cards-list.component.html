@@ -24,7 +24,7 @@
     </div>
   </div>
   <!-- Grid -->
-  <mat-grid-list class="cards" cols="4" *ngIf="!isListView">
+  <mat-grid-list class="cards" cols="4" rowHeight="12em" *ngIf="!isListView">
     <mat-grid-tile class="grid-tile" *ngFor="let card of unfavoriteCards">
       <mat-card class="grid-card" (click)="onCardClick(card.id, card.name, card.code, card.description, card.type)">
         <mat-card-header>

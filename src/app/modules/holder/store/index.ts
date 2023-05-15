@@ -3,7 +3,7 @@ import {createReducer, MetaReducer, on} from "@ngrx/store";
 import {
   cardLoaded,
   clean,
-  familyLoaded, relationDeleted,
+  familyLoaded, PublicUserCardsLoaded, relationDeleted,
   requestsLoaded,
   subscribersLoaded,
   UserCardsLoaded,
@@ -44,6 +44,10 @@ export const cardsReducer = createReducer(
     card
   })),
   on(UserCardsLoaded, (state, { list }) => ({
+    ...state,
+    cards: list,
+  })),
+  on(PublicUserCardsLoaded, (state, { list }) => ({
     ...state,
     cards: list,
   })),

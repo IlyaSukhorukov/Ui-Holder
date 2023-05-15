@@ -5,43 +5,45 @@
     </mat-card-title>
   </mat-card>
 </div>
-<div *ngIf="currentUser" class="main" fxLayout="row" fxLayoutAlign="center start">
-  <mat-card class="card-pic">
-    <mat-card-content>
-      <button mat-icon-button class="profile-pic-button">
-        <mat-icon aria-hidden="false" aria-label="Иконка профиля" class="profile-pic-image">person</mat-icon>
-      </button>
-    </mat-card-content>
-  </mat-card>
-  <mat-card class="card-info">
-    <mat-card-title class="card-info-title" fxLayout="row">
-      <h1>{{ currentUser?.public_name || 'Данный пользователь скрыл личную информацию' }}</h1>
-      <div class="main-spacer"></div>
-      <button *ngIf="!isMyProfile()" mat-icon-button matTooltip="Подписаться">
-        <mat-icon aria-hidden="false" aria-label="Иконка подписки">person_add</mat-icon>
-      </button>
-      <button *ngIf="!isMyProfile()" mat-icon-button class="add-friend-button" (click)="onAddFriend()" matTooltip="Запросить семейный доступ">
-        <mat-icon aria-hidden="false" aria-label="Иконка профиля">diversity_1</mat-icon>
-      </button>
-    </mat-card-title>
-    <mat-card-subtitle class="card-info-subtitle">
-      <h4>id: {{ currentUser.public_id }}</h4>
-    </mat-card-subtitle>
-    <mat-card-content fxLayout="row" fxLayoutAlign="space-evenly start">
-      <p class="stats-text">Подписчики: 0</p>
-      <p class="stats-text">Подписки: 0</p>
-    </mat-card-content>
-  </mat-card>
-  <mat-grid-list class="cards" cols="4">
-    <mat-grid-tile class="grid-tile" *ngFor="let card of unfavoriteCards">
-      <mat-card class="grid-card" >
-        <mat-card-header>
-          <mat-card-title>{{card.name}}</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <p>{{card.code}}</p>
-        </mat-card-content>
-      </mat-card>
-    </mat-grid-tile>
-  </mat-grid-list>
+<div *ngIf="currentUser" class="main" fxLayout="column" fxLayoutAlign="start center">
+<div fxLayout="row" fxLayoutAlign="center start">
+    <mat-card class="card-pic">
+      <mat-card-content>
+        <button mat-icon-button class="profile-pic-button">
+          <mat-icon aria-hidden="false" aria-label="Иконка профиля" class="profile-pic-image">person</mat-icon>
+        </button>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="card-info">
+      <mat-card-title class="card-info-title" fxLayout="row">
+        <h1>{{ currentUser?.public_name || 'Данный пользователь скрыл личную информацию' }}</h1>
+        <div class="main-spacer"></div>
+        <button *ngIf="!isMyProfile()" mat-icon-button matTooltip="Подписаться">
+          <mat-icon aria-hidden="false" aria-label="Иконка подписки">person_add</mat-icon>
+        </button>
+        <button *ngIf="!isMyProfile()" mat-icon-button class="add-friend-button" (click)="onAddFriend()" matTooltip="Запросить семейный доступ">
+          <mat-icon aria-hidden="false" aria-label="Иконка профиля">diversity_1</mat-icon>
+        </button>
+      </mat-card-title>
+      <mat-card-subtitle class="card-info-subtitle">
+        <h4>id: {{ currentUser.public_id }}</h4>
+      </mat-card-subtitle>
+      <mat-card-content fxLayout="row" fxLayoutAlign="space-evenly start">
+        <p class="stats-text">Подписчики: 0</p>
+        <p class="stats-text">Подписки: 0</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+<mat-grid-list class="grid" cols="4" rowHeight="12em">
+  <mat-grid-tile class="grid-tile" *ngFor="let card of cards">
+    <mat-card class="grid-card" >
+      <mat-card-header>
+        <mat-card-title>{{card.name}}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>{{card.code}}</p>
+      </mat-card-content>
+    </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>
 </div>

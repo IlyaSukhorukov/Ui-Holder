@@ -29,6 +29,13 @@
 .card-info-subtitle {
   margin-left: 1em;
 }
+.cards {
+  width: 69em;
+  min-width: 40em;
+  max-width: 69em;
+  margin-top: 1em;
+  display: block;
+}
 .add-friend-button {
   margin-right: 0.5em;
 }
@@ -42,4 +49,15 @@
 }
 .stats-text {
   font-size: 1.5em;
+}
+.grid {
+  width: 69em;
+}
+.grid-card {
+  width: 15em;
+  height: 10em;
+  margin: 2em;
+}
+.list-card {
+  margin-top: 1em;
 }
