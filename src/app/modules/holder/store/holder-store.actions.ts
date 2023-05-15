@@ -44,7 +44,7 @@ export const cardLoaded = createAction(HolderActionTypes.cardLoaded, props<{card
 export const deleteCard = createAction(HolderActionTypes.deleteCard, props<{uuid: string}>());
 export const cardDeleted = createAction(HolderActionTypes.cardDeleted, props<{uuid: string}>());
 
-export const loadUserCards = createAction(HolderActionTypes.loadUserCards, props<{id: string}>());
+export const loadUserCards = createAction(HolderActionTypes.loadUserCards, props<{ids: string[]}>());
 export const UserCardsLoaded = createAction(HolderActionTypes.userCardsLoaded, props<{list: Card[]}>());
 
 export const loadPublicUserCards = createAction(HolderActionTypes.loadPublicUserCards, props<{id: string}>());

@@ -64,9 +64,15 @@ const generateMutationDeleteCard = (uuid: string): string => `
   }
 `
 
-const generateQueryLoadUserCards = (id: string): string => `
+const generateQueryLoadUserCards = (ids: string[]): string => {
+  let condition: string = ``;
+  for (const id of ids){
+    condition += `{id_user: {_eq: "${id}"}},`
+  }
+  console.log(condition)
+  return `
   query {
-      cards(where: {id_user: {_eq: "${id}"}}) {
+      cards(where: {_or: [${condition}]}) {
         code
         id
         id_user
@@ -78,6 +84,7 @@ const generateQueryLoadUserCards = (id: string): string => `
       }
   }
 `
+}
 
 const generateQueryLoadPublicUserCards = (id: string): string => `
   query {
@@ -276,9 +283,9 @@ export class HolderStoreEffects {
   $getUserCards = createEffect(() =>
     this.actions$.pipe(
       ofType(loadUserCards),
-      exhaustMap(({ id }) => {
+      exhaustMap(({ ids }) => {
         const qo: QueryOptions = {
-          query: gql`${generateQueryLoadUserCards(id)}`,
+          query: gql`${generateQueryLoadUserCards(ids)}`,
           fetchPolicy: 'no-cache',
         }
         return this._apollo.query<{list: Card[]}>(qo).pipe(

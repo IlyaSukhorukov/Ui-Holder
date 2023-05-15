@@ -29,7 +29,6 @@ export class CardsListComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscribeOnCardsList();
     this.subscribeOnSubsId();
-    this._store.dispatch(loadUserCards({ id: CURRENT_USER_PUBLIC_ID }));
     this._store.dispatch(loadSubsId({ uuid: CURRENT_USER_PUBLIC_ID }));
   }
 
@@ -45,6 +44,7 @@ export class CardsListComponent implements OnInit, OnDestroy {
     this._store.select(selectSubsId).pipe(takeUntil(this._unsubscribe$)).subscribe((data) => {
       if (!isEmpty(data)) {
         this.subsId = data;
+        this._store.dispatch(loadUserCards({ ids: this.subsId }));
       }
     });
   }
