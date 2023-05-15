@@ -44,8 +44,8 @@ export class CardsListComponent implements OnInit, OnDestroy {
     this._store.select(selectSubsId).pipe(takeUntil(this._unsubscribe$)).subscribe((data) => {
       if (!isEmpty(data)) {
         this.subsId = data;
-        this._store.dispatch(loadUserCards({ ids: this.subsId }));
       }
+      this._store.dispatch(loadUserCards({ ids: isEmpty(this.subsId) ? [CURRENT_USER_PUBLIC_ID] : this.subsId }));
     });
   }
 
