@@ -26,6 +26,10 @@
       <button mat-button class="sidenav-button" [routerLink]="['./family']">Социальное</button>
       <mat-divider></mat-divider>
     </ng-container>
+    <ng-container>
+      <button mat-button class="sidenav-button" [routerLink]="['./profile/',id]">Профиль</button>
+      <mat-divider></mat-divider>
+    </ng-container>
   </mat-sidenav>
   <mat-sidenav-content class="page">
     <router-outlet></router-outlet>
