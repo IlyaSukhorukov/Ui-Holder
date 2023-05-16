@@ -16,7 +16,7 @@
     </mat-card>
     <mat-card class="card-info">
       <mat-card-title class="card-info-title" fxLayout="row">
-        <h1>{{ currentUser?.public_name || 'Данный пользователь скрыл личную информацию' }}</h1>
+        <h1>{{ currentUser?.public_name || 'Unknown' }}</h1>
         <div class="main-spacer"></div>
         <button *ngIf="!isMyProfile()" mat-icon-button matTooltip="Подписаться" (click)="onSubscribe()">
           <mat-icon aria-hidden="false" aria-label="Иконка подписки">person_add</mat-icon>
@@ -36,7 +36,7 @@
   </div>
 <mat-grid-list class="grid" cols="4" rowHeight="12em">
   <mat-grid-tile class="grid-tile" *ngFor="let card of cards">
-    <mat-card class="grid-card" (click)="onCardClick(card.id, card.name, card.code, card.description, card.type)">
+    <mat-card class="grid-card" (click)="onCardClick(card)">
       <mat-card-header>
         <mat-card-title>{{card.name}}</mat-card-title>
       </mat-card-header>

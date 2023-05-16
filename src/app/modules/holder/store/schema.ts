@@ -1,5 +1,6 @@
 export class Card {
   id: string = '';
+  id_user: string = '';
   name: string = '';
   code: string = '';
   stat_opened: number = 0;

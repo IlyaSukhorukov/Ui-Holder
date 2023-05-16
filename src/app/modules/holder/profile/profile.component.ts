@@ -6,7 +6,7 @@ import {Store} from "@ngrx/store";
 import {FormBuilder} from "@angular/forms";
 import {selectCardsList, selectUser} from "../store/holder-store.selectors";
 import {Card, Relations, User} from "../store/schema";
-import {addFriend, clean, loadPublicUserCards, loadUser, loadUserCards} from "../store/holder-store.actions";
+import {addFriend, clean, loadPublicUserCards, loadUser } from "../store/holder-store.actions";
 import {CURRENT_USER_PUBLIC_ID} from "../../../core/default-values";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {CardModalComponent} from "../card-modal/card-modal.component";
@@ -108,17 +108,13 @@ export class ProfileComponent implements OnInit, OnDestroy {
       });
   }
 
-  onCardClick(uuid: string, name: string, code: string, description: string, type: string): void {
+  onCardClick(card: Card): void {
     const dialogRef = this.dialog.open(CardModalComponent, {
       width: '50em',
       maxWidth: '69em',
       maxHeight: '50em',
       data: {
-        uuid,
-        name,
-        code,
-        description,
-        type
+        card
       }
     });
 
