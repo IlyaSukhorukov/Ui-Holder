@@ -19,6 +19,7 @@ export interface IHolderState {
   card: Card | null;
   cards: Card[];
   subsId: string[];
+  familyId: string[];
 
   requests: Relations[];
   family: Relations[];
@@ -30,6 +31,7 @@ export const initialState: IHolderState = {
   card: null,
   cards: [],
   subsId: [],
+  familyId: [],
 
   requests: [],
   family: [],
@@ -82,9 +84,10 @@ export const cardsReducer = createReducer(
       subscribers: state.subscribers.filter((e) => e.uuid !== uuid),
     })
   }),
-  on(subsIdLoaded, (state, { subsId }) => ({
+  on(subsIdLoaded, (state, { subsId, familyId }) => ({
     ...state,
     subsId,
+    familyId
   })),
 );
 

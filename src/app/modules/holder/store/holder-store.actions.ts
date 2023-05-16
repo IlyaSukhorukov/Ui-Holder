@@ -44,7 +44,7 @@ export const cardLoaded = createAction(HolderActionTypes.cardLoaded, props<{card
 export const deleteCard = createAction(HolderActionTypes.deleteCard, props<{uuid: string}>());
 export const cardDeleted = createAction(HolderActionTypes.cardDeleted, props<{uuid: string}>());
 
-export const loadUserCards = createAction(HolderActionTypes.loadUserCards, props<{ids: string[]}>());
+export const loadUserCards = createAction(HolderActionTypes.loadUserCards, props<{subIds: string[], familyIds: string[]}>());
 export const UserCardsLoaded = createAction(HolderActionTypes.userCardsLoaded, props<{list: Card[]}>());
 
 export const loadPublicUserCards = createAction(HolderActionTypes.loadPublicUserCards, props<{id: string}>());
@@ -73,6 +73,6 @@ export const updateRelation = createAction(HolderActionTypes.updateRelation, pro
 export const relationUpdated = createAction(HolderActionTypes.relationUpdated, props<{relation: Relations}>());
 
 export const loadSubsId = createAction(HolderActionTypes.loadSubsId, props<{uuid: string}>());
-export const subsIdLoaded = createAction(HolderActionTypes.subsIdLoaded, props<{subsId: string[]}>());
+export const subsIdLoaded = createAction(HolderActionTypes.subsIdLoaded, props<{subsId: string[], familyId: string[]}>());
 
 export const clean = createAction(HolderActionTypes.clean);

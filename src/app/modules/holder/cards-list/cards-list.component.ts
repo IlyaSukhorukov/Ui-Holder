@@ -2,13 +2,13 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Store} from "@ngrx/store";
 import {loadSubsId, loadUserCards} from "../store/holder-store.actions";
 import {Card} from "../store/schema";
-import {selectCardsList, selectSubsId} from "../store/holder-store.selectors";
-import {Subject, takeUntil} from "rxjs";
+import {selectCardsList, selectFamilyId, selectSubsId } from "../store/holder-store.selectors";
+import {combineLatest, debounceTime, Subject, takeUntil} from "rxjs";
 import {isEmpty, isNil} from "lodash";
 import {MatSlideToggleChange} from "@angular/material/slide-toggle";
 import {MatDialog} from "@angular/material/dialog";
 import {CardModalComponent} from "../card-modal/card-modal.component";
-import {CURRENT_USER_PUBLIC_ID, CURRENT_USER_UUID} from "../../../core/default-values";
+import { CURRENT_USER_PUBLIC_ID } from "../../../core/default-values";
 
 @Component({
   selector: 'app-cards-list',
@@ -22,13 +22,27 @@ export class CardsListComponent implements OnInit, OnDestroy {
   public cards: Card[] = [];
 
   public subsId: string[] = [];
+  public familyId: string[] = [];
 
   constructor(private _store: Store, public dialog: MatDialog) {
+    combineLatest([this._store.select(selectSubsId),this._store.select(selectFamilyId)])
+      .pipe(debounceTime(400),takeUntil(this._unsubscribe$))
+      .subscribe(([subsId, familyId]) => {
+        if (!isEmpty(subsId)) {
+          this.subsId = subsId;
+        }
+        if (!isEmpty(familyId)) {
+          this.familyId = familyId;
+        }
+        // console.log('subsId = ', subsId)
+        // console.log('familyId = ', familyId)
+        this._store.dispatch(loadUserCards({ subIds: this.subsId, familyIds: this.familyId }));
+      });
   }
 
   ngOnInit(): void {
     this.subscribeOnCardsList();
-    this.subscribeOnSubsId();
+    // this.subscribeOnSubsId();
     this._store.dispatch(loadSubsId({ uuid: CURRENT_USER_PUBLIC_ID }));
   }
 
@@ -40,14 +54,14 @@ export class CardsListComponent implements OnInit, OnDestroy {
     });
   }
 
-  subscribeOnSubsId(): void {
+  /*subscribeOnSubsId(): void {
     this._store.select(selectSubsId).pipe(takeUntil(this._unsubscribe$)).subscribe((data) => {
       if (!isEmpty(data)) {
         this.subsId = data;
       }
-      this._store.dispatch(loadUserCards({ ids: isEmpty(this.subsId) ? [CURRENT_USER_PUBLIC_ID] : this.subsId }));
+      this._store.dispatch(loadUserCards({ subIds: this.subsId, familyIds: this.subsId })); // TODO family ids
     });
-  }
+  }*/
 
   onToggleChange($event: MatSlideToggleChange): void{
     this.isListView = $event.checked;

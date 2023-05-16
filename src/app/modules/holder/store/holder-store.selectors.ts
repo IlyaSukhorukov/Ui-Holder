@@ -12,3 +12,4 @@ export const selectFamily = createSelector(State, (state) => state.family);
 export const selectSubscribers = createSelector(State, (state) => state.subscribers);
 
 export const selectSubsId = createSelector(State, (state) => state.subsId);
+export const selectFamilyId = createSelector(State, (state) => state.familyId);

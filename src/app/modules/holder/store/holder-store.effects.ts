@@ -31,6 +31,7 @@ import {
 import {Card, Relations, User} from "./schema";
 import {MutationOptions, QueryOptions} from "@apollo/client/core";
 import {omit} from "lodash";
+import {CURRENT_USER_PUBLIC_ID} from "../../../core/default-values";
 
 const generateQueryLoadUser = (public_id: string): string => `
   query {
@@ -64,15 +65,24 @@ const generateMutationDeleteCard = (uuid: string): string => `
   }
 `
 
-const generateQueryLoadUserCards = (ids: string[]): string => {
-  let condition: string = ``;
-  for (const id of ids){
-    condition += `{id_user: {_eq: "${id}"}},`
+const generateQueryLoadUserCards = (subscribersIds: string[],familyIds: string[]): string => {
+  let conditionSubscribers: string = ``;
+  for (const id of subscribersIds) {
+    conditionSubscribers += `{id_user: {_eq: "${id}"}},`
   }
-  console.log(condition)
+  let conditionFamily: string = ``;
+  for (const id of familyIds) {
+    conditionFamily += `{id_user: {_eq: "${id}"}},`
+  }
   return `
   query {
-      cards(where: {_or: [${condition}]}) {
+      cards(where: {
+        _or: [
+          {_or: [${conditionSubscribers}], access: {_eq: "public"}},
+          {_or: [${conditionFamily}], access: {_eq: "family"}},
+          {id_user: {_eq: "${CURRENT_USER_PUBLIC_ID}"}}
+        ]
+      }) {
         code
         id
         id_user
@@ -227,6 +237,7 @@ const generateQueryLoadSubsId = (id: string): string => `
      ]}) {
       from
       to
+      status
     }
   }
 `
@@ -283,9 +294,9 @@ export class HolderStoreEffects {
   $getUserCards = createEffect(() =>
     this.actions$.pipe(
       ofType(loadUserCards),
-      exhaustMap(({ ids }) => {
+      exhaustMap(({ subIds, familyIds }) => {
         const qo: QueryOptions = {
-          query: gql`${generateQueryLoadUserCards(ids)}`,
+          query: gql`${generateQueryLoadUserCards(subIds, familyIds)}`,
           fetchPolicy: 'no-cache',
         }
         return this._apollo.query<{list: Card[]}>(qo).pipe(
@@ -464,16 +475,17 @@ export class HolderStoreEffects {
       return this._apollo.query<{family: Relations[]}>(queryOptions).pipe(
         // @ts-ignore
         map(({data}) => {
-          const result: string[] = [];
+          const resultSubs: string[] = [];
+          const resultFamily: string[] = [];
           for (const person of data.family) {
-            if (!result.includes(person.from)){
-              result.push(person.from)
+            if (person.status === 'subscriber' && !resultSubs.includes(person.to)){
+              resultSubs.push(person.to)
             }
-            if (!result.includes(person.to)){
-              result.push(person.to)
+            if (person.status === 'family' && !resultFamily.includes(person.from)) {
+              resultFamily.push(person.to === CURRENT_USER_PUBLIC_ID ? person.from : person.to)
             }
           }
-          return subsIdLoaded({subsId: result});
+          return subsIdLoaded({subsId: resultSubs, familyId: resultFamily});
         }),
       );
     })
