@@ -32,7 +32,6 @@ export class CardFormComponent implements OnInit, OnDestroy {
   private _setFormGroup(): void {
     this.formGroup.get("name")?.setValidators(Validators.required);
     this.formGroup.get("code")?.setValidators(Validators.required);
-    this.formGroup.patchValue({access: 'private'});
     this.formGroup.patchValue({type: 'other'});
   }
 
